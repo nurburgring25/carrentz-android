@@ -1,0 +1,5 @@
+<com.mikepenz.iconics.IconicsDrawable
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:ico_icon="faw_google"
+    app:ico_color="@android:color/white"
+    app:ico_size="24dp" />
