@@ -15,11 +15,18 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Arrays;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dev.burikk.carrentz.R;
 import dev.burikk.carrentz.activity.MerchantRegisterActivity;
+import dev.burikk.carrentz.helper.Strings;
+import dev.burikk.carrentz.helper.Validators;
 
 /**
  * @author Muhammad Irfan
@@ -66,16 +73,26 @@ public class MerchantRegisterAccountFragment extends Fragment implements Step {
     @Nullable
     @Override
     public VerificationError verifyStep() {
+        if (!this.valid()) {
+            return new VerificationError(null);
+        }
+
         return null;
     }
 
     @Override
-    public void onSelected() {
-
-    }
+    public void onSelected() {}
 
     @Override
-    public void onError(@NonNull VerificationError error) {
+    public void onError(@NonNull VerificationError error) {}
 
+    private boolean valid() {
+        List<Boolean> booleans = Arrays.asList(
+                Validators.mandatory(this.merchantRegisterActivity, this.edtEmail, "Email"),
+                Validators.mandatory(this.merchantRegisterActivity, this.edtPassword, "Kode telepon"),
+                Validators.custom(StringUtils.equals(Strings.value(this.edtPassword.getText()), Strings.value(this.edtRetypePassword.getText())), this.edtRetypePassword, "Ketik ulang kata sandi tidak sesuai.")
+        );
+
+        return !booleans.contains(false);
     }
 }

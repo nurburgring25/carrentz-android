@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,11 +15,15 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
+import java.util.Collections;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import dev.burikk.carrentz.R;
 import dev.burikk.carrentz.activity.MerchantRegisterActivity;
+import dev.burikk.carrentz.helper.Validators;
 
 /**
  * @author Muhammad Irfan
@@ -30,10 +33,6 @@ import dev.burikk.carrentz.activity.MerchantRegisterActivity;
 public class MerchantRegisterOwnerFragment extends Fragment implements Step {
     @BindView(R.id.edtName)
     public TextInputEditText edtName;
-    @BindView(R.id.edtPhoneNumber)
-    public TextInputEditText edtPhoneNumber;
-    @BindView(R.id.actvDialCode)
-    public AutoCompleteTextView actvDialCode;
 
     public MerchantRegisterActivity merchantRegisterActivity;
     public Unbinder unbinder;
@@ -67,16 +66,24 @@ public class MerchantRegisterOwnerFragment extends Fragment implements Step {
     @Nullable
     @Override
     public VerificationError verifyStep() {
+        if (!this.valid()) {
+            return new VerificationError(null);
+        }
+
         return null;
     }
 
     @Override
-    public void onSelected() {
-
-    }
+    public void onSelected() {}
 
     @Override
-    public void onError(@NonNull VerificationError error) {
+    public void onError(@NonNull VerificationError error) {}
 
+    private boolean valid() {
+        List<Boolean> booleans = Collections.singletonList(
+                Validators.mandatory(this.merchantRegisterActivity, this.edtName, "Nama")
+        );
+
+        return !booleans.contains(false);
     }
 }
