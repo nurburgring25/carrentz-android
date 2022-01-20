@@ -27,6 +27,7 @@ import dev.burikk.carrentz.fragment.MerchantRegisterBusinessFragment;
 import dev.burikk.carrentz.fragment.MerchantRegisterOwnerFragment;
 import dev.burikk.carrentz.helper.Strings;
 import dev.burikk.carrentz.protocol.MainProtocol;
+import io.reactivex.disposables.Disposable;
 
 /**
  * @author Muhammad Irfan
@@ -43,6 +44,8 @@ public class MerchantRegisterActivity extends AppCompatActivity implements Stepp
     @BindView(R.id.stepperLayout)
     public StepperLayout stepperLayout;
 
+    public Disposable disposable;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +58,15 @@ public class MerchantRegisterActivity extends AppCompatActivity implements Stepp
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (this.disposable != null) {
+            this.disposable.dispose();
+        }
+    }
+
+    @Override
     public void onCompleted(View completeButton) {
         MerchantRegisterStepperAdapter merchantRegisterStepperAdapter = (MerchantRegisterStepperAdapter) this.stepperLayout.getAdapter();
 
@@ -62,7 +74,7 @@ public class MerchantRegisterActivity extends AppCompatActivity implements Stepp
             RegisterRequest registerRequest = new RegisterRequest();
 
             // Dapatkan isian dari tab usaha
-            MerchantRegisterBusinessFragment merchantRegisterBusinessFragment = (MerchantRegisterBusinessFragment) merchantRegisterStepperAdapter.getItem(0);
+            MerchantRegisterBusinessFragment merchantRegisterBusinessFragment = (MerchantRegisterBusinessFragment) merchantRegisterStepperAdapter.createStep(0);
 
             registerRequest.setBusinessName(Strings.value(merchantRegisterBusinessFragment.edtBusinessName.getText()));
             registerRequest.setPhoneNumber(Strings.value(merchantRegisterBusinessFragment.actvDialCode.getText()) + Strings.value(merchantRegisterBusinessFragment.edtPhoneNumber.getText()));
@@ -70,17 +82,17 @@ public class MerchantRegisterActivity extends AppCompatActivity implements Stepp
             registerRequest.setCity(Strings.value(merchantRegisterBusinessFragment.actvCity.getText()));
 
             // Dapatkan isian dari tab pemilik
-            MerchantRegisterOwnerFragment merchantRegisterOwnerFragment = (MerchantRegisterOwnerFragment) merchantRegisterStepperAdapter.getItem(1);
+            MerchantRegisterOwnerFragment merchantRegisterOwnerFragment = (MerchantRegisterOwnerFragment) merchantRegisterStepperAdapter.createStep(1);
 
             registerRequest.setName(Strings.value(merchantRegisterOwnerFragment.edtName.getText()));
 
             // Dapatkan isian dari tab akun
-            MerchantRegisterAccountFragment merchantRegisterAccountFragment = (MerchantRegisterAccountFragment) merchantRegisterStepperAdapter.getItem(2);
+            MerchantRegisterAccountFragment merchantRegisterAccountFragment = (MerchantRegisterAccountFragment) merchantRegisterStepperAdapter.createStep(2);
 
             registerRequest.setEmail(Strings.value(merchantRegisterAccountFragment.edtEmail.getText()));
             registerRequest.setPassword(Strings.value(merchantRegisterAccountFragment.edtPassword.getText()));
 
-            MerchantApi.register(this, registerRequest);
+            this.disposable = MerchantApi.register(this, registerRequest);
         }
     }
 
@@ -88,7 +100,9 @@ public class MerchantRegisterActivity extends AppCompatActivity implements Stepp
     public void onError(VerificationError verificationError) {}
 
     @Override
-    public void onStepSelected(int newStepPosition) {}
+    public void onStepSelected(int newStepPosition) {
+        System.err.println("test");
+    }
 
     @Override
     public void onReturn() {}
@@ -103,6 +117,7 @@ public class MerchantRegisterActivity extends AppCompatActivity implements Stepp
     }
 
     private void widget() {
+        this.stepperLayout.setOffscreenPageLimit(3);
         this.stepperLayout.setAdapter(new MerchantRegisterStepperAdapter(this.getSupportFragmentManager(), this));
         this.stepperLayout.setListener(this);
     }

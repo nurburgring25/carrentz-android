@@ -89,8 +89,9 @@ public class MerchantRegisterAccountFragment extends Fragment implements Step {
     private boolean valid() {
         List<Boolean> booleans = Arrays.asList(
                 Validators.mandatory(this.merchantRegisterActivity, this.edtEmail, "Email"),
-                Validators.mandatory(this.merchantRegisterActivity, this.edtPassword, "Kode telepon"),
-                Validators.custom(StringUtils.equals(Strings.value(this.edtPassword.getText()), Strings.value(this.edtRetypePassword.getText())), this.edtRetypePassword, "Ketik ulang kata sandi tidak sesuai.")
+                Validators.mandatory(this.merchantRegisterActivity, this.edtPassword, "Kata sandi"),
+                Validators.maxLength(this.edtEmail, 64),
+                Validators.custom(!StringUtils.equals(Strings.value(this.edtPassword.getText()), Strings.value(this.edtRetypePassword.getText())), this.edtRetypePassword, "Ketik ulang kata sandi tidak sesuai.")
         );
 
         return !booleans.contains(false);

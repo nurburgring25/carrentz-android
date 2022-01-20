@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
@@ -146,6 +147,9 @@ public class MerchantRegisterBusinessFragment extends Fragment implements Step, 
     @SuppressLint("SetTextI18n")
     private void widget() {
         this.actvDialCode.setText("+62");
+
+        ((TextInputLayout) this.actvCity.getParent().getParent()).setEndIconOnClickListener(view -> this.city());
+        ((TextInputLayout) this.actvDialCode.getParent().getParent()).setEndIconOnClickListener(view -> this.dialCode());
     }
 
     private boolean valid() {
@@ -154,7 +158,9 @@ public class MerchantRegisterBusinessFragment extends Fragment implements Step, 
                 Validators.mandatory(this.merchantRegisterActivity, this.actvDialCode, "Kode telepon"),
                 Validators.mandatory(this.merchantRegisterActivity, this.edtPhoneNumber, "Nomor ponsel"),
                 Validators.mandatory(this.merchantRegisterActivity, this.edtBusinessAddress, "Alamat usaha"),
-                Validators.mandatory(this.merchantRegisterActivity, this.actvCity, "Kota")
+                Validators.mandatory(this.merchantRegisterActivity, this.actvCity, "Kota"),
+                Validators.maxLength(this.edtBusinessName, 64),
+                Validators.maxLength(this.edtBusinessAddress, 256)
         );
 
         return !booleans.contains(false);

@@ -252,6 +252,46 @@ public class Validators {
         return true;
     }
 
+    public static boolean maxLength(TextInputEditText textInputEditText, int maxLength) {
+        String error = "Panjang karakter maksimal " + maxLength;
+
+        // Mencari object text input layout
+        TextInputLayout textInputLayout = null;
+
+        if (textInputEditText.getParent() instanceof TextInputLayout) {
+            textInputLayout = (TextInputLayout) textInputEditText.getParent();
+        } else {
+            if (textInputEditText.getParent().getParent() instanceof TextInputLayout) {
+                textInputLayout = (TextInputLayout) textInputEditText.getParent().getParent();
+            }
+        }
+
+        // Reset kondisi
+        if (textInputLayout != null) {
+            textInputLayout.setErrorEnabled(false);
+            textInputLayout.setError(null);
+        } else {
+            textInputEditText.setError(null);
+        }
+
+        // Validasi
+        if (StringUtils.length(textInputEditText.getText()) > maxLength) {
+            if (textInputLayout != null) {
+                textInputLayout.setErrorEnabled(true);
+                textInputLayout.setError(error);
+            } else {
+                textInputEditText.setError(error);
+            }
+
+            // Ganti fokus
+            textInputEditText.requestFocus();
+
+            return false;
+        }
+
+        return true;
+    }
+
     public static boolean ipAddress(Activity activity, TextInputEditText textInputEditText, String fieldName, boolean condition) {
         if (condition) {
             String error = "Format nilai pada kolom " + fieldName + " tidak sesuai";

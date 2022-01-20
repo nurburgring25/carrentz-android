@@ -15,7 +15,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.stepstone.stepper.Step;
 import com.stepstone.stepper.VerificationError;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -80,8 +80,9 @@ public class MerchantRegisterOwnerFragment extends Fragment implements Step {
     public void onError(@NonNull VerificationError error) {}
 
     private boolean valid() {
-        List<Boolean> booleans = Collections.singletonList(
-                Validators.mandatory(this.merchantRegisterActivity, this.edtName, "Nama")
+        List<Boolean> booleans = Arrays.asList(
+                Validators.mandatory(this.merchantRegisterActivity, this.edtName, "Nama"),
+                Validators.maxLength(this.edtName, 128)
         );
 
         return !booleans.contains(false);

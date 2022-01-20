@@ -18,6 +18,7 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import dev.burikk.carrentz.api.interceptor.AuthenticationInterceptor;
 import dev.burikk.carrentz.common.Constant;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
@@ -81,6 +82,7 @@ public class RestManager {
         builder.connectTimeout(3, MINUTES);
         builder.readTimeout(3, MINUTES);
         builder.addInterceptor(httpLoggingInterceptor);
+        builder.addInterceptor(new AuthenticationInterceptor());
         builder.cookieJar(new CookieJar() {
             @Override
             public void saveFromResponse(@NonNull HttpUrl url, @NonNull List<Cookie> cookies) {
