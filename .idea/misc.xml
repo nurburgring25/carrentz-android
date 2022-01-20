@@ -8,22 +8,26 @@
         <entry key="..\:/Android/Carrentz/app/src/main/res/drawable/ic_launcher_background.xml" value="0.37864583333333335" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.37864583333333335" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/drawable/ic_person.xml" value="0.2" />
-        <entry key="..\:/Android/Carrentz/app/src/main/res/drawable/ic_search.xml" value="0.2833333333333333" />
-        <entry key="..\:/Android/Carrentz/app/src/main/res/layout/activity_merchant_register.xml" value="0.29923273657289" />
+        <entry key="..\:/Android/Carrentz/app/src/main/res/layout/activity_merchant_register.xml" value="0.3625" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/layout/activity_merchant_welcome.xml" value="0.33" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/layout/activity_welcome.xml" value="0.3625" />
-        <entry key="..\:/Android/Carrentz/app/src/main/res/layout/adapter_spinner.xml" value="0.3625" />
-        <entry key="..\:/Android/Carrentz/app/src/main/res/layout/bottom_sheet_confirmation.xml" value="0.3625" />
-        <entry key="..\:/Android/Carrentz/app/src/main/res/layout/bottom_sheet_spinner.xml" value="0.3625" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/layout/fragment_merchant_register_account.xml" value="0.3625" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/layout/fragment_merchant_register_business.xml" value="0.3625" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/layout/fragment_merchant_register_owner.xml" value="0.3625" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/layout/fragment_merchant_welcome.xml" value="0.33" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/layout/fragment_user_welcome.xml" value="0.33" />
+        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/activity_merchant_home.xml" value="0.2171875" />
+        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/activity_merchant_register.xml" value="0.32608695652173914" />
+        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/activity_welcome.xml" value="0.32608695652173914" />
+        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/fragment_merchant_register_account.xml" value="0.32608695652173914" />
+        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/fragment_merchant_register_business.xml" value="0.23324275362318841" />
+        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/fragment_merchant_register_owner.xml" value="0.32608695652173914" />
+        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/fragment_merchant_welcome.xml" value="0.32608695652173914" />
+        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/fragment_user_welcome.xml" value="0.32608695652173914" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

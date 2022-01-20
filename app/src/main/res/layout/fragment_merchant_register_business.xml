@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:maxLines="1"
-            android:nextFocusForward="@+id/edtBusinessAddress"
+            android:nextFocusForward="@+id/edtPhoneNumber"
             android:imeOptions="actionNext"
             android:singleLine="true" />
 
@@ -60,6 +60,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:nextFocusForward="@+id/edtBusinessAddress"
+                android:imeOptions="actionNext"
                 android:maxLines="1"
                 android:singleLine="true" />
 

@@ -39,6 +39,8 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:maxLines="1"
+            android:nextFocusForward="@+id/edtRetypePassword"
+            android:imeOptions="actionNext"
             android:singleLine="true" />
 
     </com.google.android.material.textfield.TextInputLayout>

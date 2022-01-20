@@ -10,6 +10,7 @@ public class Constant {
     }
 
     public static class URL {
-        public static final String BASE = "https://172.16.50.212:8443/carrentz/api/";
+        // public static final String BASE = "https://172.16.50.212:8443/carrentz/api/";
+        public static final String BASE = "https://192.168.100.76:8443/carrentz/api/";
     }
 }
