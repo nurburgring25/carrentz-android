@@ -1,0 +1,14 @@
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@color/md_theme_primary" />
+
+    <item>
+
+        <bitmap
+            android:src="@drawable/launch_screen_icon"
+            android:gravity="center" />
+
+    </item>
+
+</layer-list>

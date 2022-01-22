@@ -29,15 +29,17 @@ android {
 dependencies {
     // Core related
     implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.6.0-alpha01'
+    implementation 'com.google.android.material:material:1.6.0-alpha02'
     implementation 'androidx.recyclerview:recyclerview:1.3.0-alpha01'
     implementation 'androidx.vectordrawable:vectordrawable:1.2.0-alpha02'
     implementation 'androidx.core:core:1.8.0-alpha02'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // Common
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'org.apache.commons:commons-lang3:3.6'
     implementation 'com.stepstone.stepper:material-stepper:4.3.1'
+    implementation 'com.googlecode.libphonenumber:libphonenumber:8.2.0'
 
     // API related
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'

@@ -27,4 +27,8 @@
         <item name="colorSurfaceInverse">@color/md_theme_inverseSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_primaryInverse</item>
     </style>
+
+    <style name="LaunchScreenTheme" parent="Theme.Material3.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/ll_launch_screen</item>
+    </style>
 </resources>

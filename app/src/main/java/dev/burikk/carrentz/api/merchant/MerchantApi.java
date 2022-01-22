@@ -6,6 +6,11 @@ import org.apache.commons.lang3.StringUtils;
 
 import dev.burikk.carrentz.api.RestManager;
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.RegisterRequest;
+import dev.burikk.carrentz.api.merchant.endpoint.account.request.SignInRequest;
+import dev.burikk.carrentz.api.merchant.endpoint.account.request.VerificationRequest;
+import dev.burikk.carrentz.api.merchant.endpoint.account.response.SignInResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.store.item.StoreItem;
+import dev.burikk.carrentz.api.merchant.endpoint.store.response.StoreListResponse;
 import dev.burikk.carrentz.helper.Dialogs;
 import dev.burikk.carrentz.helper.Views;
 import dev.burikk.carrentz.protocol.MainProtocol;
@@ -51,18 +56,18 @@ public class MerchantApi {
 
                 if (response != null) {
                     if (response.errorBody() != null) {
-                        Dialogs.message(mainProtocol.getActivity(), response.errorBody().string());
+                        Dialogs.message(mainProtocol.getAppCompatActivity(), response.errorBody().string());
                     } else {
-                        Dialogs.message(mainProtocol.getActivity(), error);
+                        Dialogs.message(mainProtocol.getAppCompatActivity(), error);
                     }
                 }
             } catch (Exception ex) {
                 Log.wtf(TAG, ex);
 
-                Dialogs.message(mainProtocol.getActivity(), error);
+                Dialogs.message(mainProtocol.getAppCompatActivity(), error);
             }
         } else {
-            Dialogs.message(mainProtocol.getActivity(), error);
+            Dialogs.message(mainProtocol.getAppCompatActivity(), error);
         }
     }
 
@@ -74,6 +79,160 @@ public class MerchantApi {
                 .GET_RETROFIT()
                 .create(MerchantParser.class)
                 .register(registerRequest)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                mainProtocol.result(null);
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable signIn(
+            MainProtocol<SignInResponse> mainProtocol,
+            SignInRequest signInRequest
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .signIn(signInRequest)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                SignInResponse signInResponse = response.body();
+
+                                if (signInResponse != null) {
+                                    mainProtocol.result(signInResponse);
+                                } else {
+                                    error(mainProtocol, new Exception());
+                                }
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable verify(
+            MainProtocol<Response<Void>> mainProtocol,
+            VerificationRequest verificationRequest
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .verify(verificationRequest)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                mainProtocol.result(response);
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable storeGet(MainProtocol<StoreListResponse> mainProtocol) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .storeGet()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                StoreListResponse storeListResponse = response.body();
+
+                                if (storeListResponse != null) {
+                                    mainProtocol.result(storeListResponse);
+                                } else {
+                                    error(mainProtocol, new Exception());
+                                }
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable storePost(
+            MainProtocol<Void> mainProtocol,
+            StoreItem storeItem
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .storePost(storeItem)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                mainProtocol.result(storeItem, null);
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable storePut(
+            MainProtocol<Void> mainProtocol,
+            StoreItem storeItem,
+            long id
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .storePut(storeItem, id)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                mainProtocol.result(storeItem, null);
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable storeDelete(
+            MainProtocol<Void> mainProtocol,
+            long id
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .storeDelete(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

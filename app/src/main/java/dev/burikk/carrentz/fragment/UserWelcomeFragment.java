@@ -26,8 +26,8 @@ import dev.burikk.carrentz.activity.WelcomeActivity;
  */
 @SuppressLint("NonConstantResourceId")
 public class UserWelcomeFragment extends Fragment {
-    @BindView(R.id.edtUsername)
-    public TextInputEditText edtUsername;
+    @BindView(R.id.edtEmail)
+    public TextInputEditText edtEmail;
 
     public WelcomeActivity welcomeActivity;
     public Unbinder unbinder;

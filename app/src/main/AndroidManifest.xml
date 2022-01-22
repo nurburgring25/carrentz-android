@@ -20,9 +20,9 @@
 
         <!--<editor-fold desc="Activity">-->
         <activity
-            android:name=".activity.WelcomeActivity"
+            android:name=".activity.LaunchScreenActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme"
+            android:theme="@style/LaunchScreenTheme"
             android:exported="true"
             tools:ignore="LockedOrientationActivity">
 
@@ -34,11 +34,60 @@
         </activity>
 
         <activity
+            android:name=".activity.WelcomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
             android:name=".activity.MerchantRegisterActivity"
             android:label="Daftar Merchant Baru"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.MerchantVerificationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.MerchantHomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.StoreListActivity"
+            android:label="Cabang"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:exported="false"
+            tools:ignore="LockedOrientationActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MerchantHomeActivity" />
+
+        </activity>
+
+        <activity
+            android:name=".activity.StoreFormActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:exported="false"
+            tools:ignore="LockedOrientationActivity">
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.StoreListActivity" />
+
+        </activity>
         <!--</editor-fold>-->
     </application>
 

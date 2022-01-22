@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -19,20 +21,28 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import dev.burikk.carrentz.R;
 import dev.burikk.carrentz.activity.MerchantRegisterActivity;
+import dev.burikk.carrentz.activity.MerchantVerificationActivity;
 import dev.burikk.carrentz.activity.WelcomeActivity;
+import dev.burikk.carrentz.api.merchant.MerchantApi;
+import dev.burikk.carrentz.api.merchant.endpoint.account.request.SignInRequest;
+import dev.burikk.carrentz.api.merchant.endpoint.account.response.SignInResponse;
 import dev.burikk.carrentz.helper.Generals;
+import dev.burikk.carrentz.helper.Strings;
+import dev.burikk.carrentz.protocol.MainProtocol;
+import io.reactivex.disposables.Disposable;
 
 /**
  * @author Muhammad Irfan
  * @since 18/01/2022 12.13
  */
 @SuppressLint("NonConstantResourceId")
-public class MerchantWelcomeFragment extends Fragment {
-    @BindView(R.id.edtUsername)
-    public TextInputEditText edtUsername;
+public class MerchantWelcomeFragment extends Fragment implements MainProtocol<SignInResponse> {
+    @BindView(R.id.edtEmail)
+    public TextInputEditText edtEmail;
 
     public WelcomeActivity welcomeActivity;
     public Unbinder unbinder;
+    public Disposable disposable;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -60,9 +70,32 @@ public class MerchantWelcomeFragment extends Fragment {
         }
     }
 
+    @Override
+    public ProgressBar getProgressBar() {
+        return this.welcomeActivity.progressBar;
+    }
+
+    @Override
+    public AppCompatActivity getAppCompatActivity() {
+        return this.welcomeActivity;
+    }
+
+    @Override
+    public void result(SignInResponse data) {
+        Bundle bundle = new Bundle();
+
+        bundle.putSerializable("SIGN_IN_RESPONSE", data);
+
+        Generals.move(this.welcomeActivity, MerchantVerificationActivity.class, bundle, false);
+    }
+
     @OnClick(R.id.btnSignIn)
     public void signIn() {
+        SignInRequest signInRequest = new SignInRequest();
 
+        signInRequest.setEmail(Strings.value(this.edtEmail.getText()));
+
+        this.disposable = MerchantApi.signIn(this, signInRequest);
     }
 
     @OnClick(R.id.btnRegister)

@@ -2,6 +2,7 @@ package dev.burikk.carrentz.activity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.widget.ProgressBar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +27,8 @@ public class WelcomeActivity extends AppCompatActivity {
     public CoordinatorLayout coordinatorLayout;
     @BindView(R.id.tabLayout)
     public TabLayout tabLayout;
+    @BindView(R.id.progressBar)
+    public ProgressBar progressBar;
     @BindView(R.id.viewPager)
     public ViewPager2 viewPager;
 

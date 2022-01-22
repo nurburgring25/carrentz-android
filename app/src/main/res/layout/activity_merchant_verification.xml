@@ -12,56 +12,43 @@
         android:layout_height="wrap_content"
         android:background="@color/md_theme_secondaryContainer">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"
-            android:padding="32dp">
+            android:paddingBottom="32dp">
 
             <ImageView
-                android:layout_width="150dp"
-                android:layout_height="75dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/app_icon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/ic_person"
                 android:contentDescription="@string/app_name" />
 
             <TextView
+                android:id="@+id/txvName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="Selamat Datang di CarrentZ"
+                android:text="Nama"
                 android:textSize="18sp"
                 android:textAlignment="center"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rental mobil jaman now yang ga pake ribet"
+                android:text="Email"
                 android:textAlignment="center"
                 android:textStyle="bold"/>
 
         </LinearLayout>
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.tabs.TabLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -80,10 +67,42 @@
             android:elevation="8dp"
             style="?android:attr/progressBarStyleHorizontal" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:gravity="center_horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:hint="Kata Sandi"
+                app:endIconMode="password_toggle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:imeActionLabel="Masuk"
+                    android:imeOptions="actionUnspecified"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                style="@style/Widget.Material3.Button.UnelevatedButton"
+                android:id="@+id/btnSignIn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="MASUK" />
+
+        </LinearLayout>
 
     </FrameLayout>
 

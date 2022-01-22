@@ -5,5 +5,7 @@ package dev.burikk.carrentz.enumeration;
  * @since 27/07/2020 06.21
  */
 public enum SharedPreferenceKey {
-    SESSION_ID
+    SESSION_ID,
+    NAME,
+    EMAIL
 }

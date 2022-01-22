@@ -3,6 +3,8 @@ package dev.burikk.carrentz.protocol;
 import android.app.Activity;
 import android.widget.ProgressBar;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 /**
  * @author Muhammad Irfan
  * @since 09/07/2018 19.02
@@ -10,7 +12,7 @@ import android.widget.ProgressBar;
 public interface MainProtocol<T> {
     ProgressBar getProgressBar();
 
-    Activity getActivity();
+    AppCompatActivity getAppCompatActivity();
 
     default void begin() {}
 

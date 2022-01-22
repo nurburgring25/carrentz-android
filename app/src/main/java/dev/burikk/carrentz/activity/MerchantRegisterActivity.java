@@ -1,8 +1,9 @@
 package dev.burikk.carrentz.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -64,6 +65,18 @@ public class MerchantRegisterActivity extends AppCompatActivity implements Stepp
         if (this.disposable != null) {
             this.disposable.dispose();
         }
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            this.finish();
+
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -128,7 +141,7 @@ public class MerchantRegisterActivity extends AppCompatActivity implements Stepp
     }
 
     @Override
-    public Activity getActivity() {
+    public AppCompatActivity getAppCompatActivity() {
         return this;
     }
 

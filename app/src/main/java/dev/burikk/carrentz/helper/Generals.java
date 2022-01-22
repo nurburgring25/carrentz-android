@@ -15,6 +15,7 @@ import android.provider.Settings;
 import android.text.InputFilter;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Surface;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,10 +23,17 @@ import android.view.inputmethod.InputMethodManager;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
+
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+
+import dev.burikk.carrentz.common.DialCode;
 
 /**
  * @author Ichsanudin Chairin
@@ -342,5 +350,34 @@ public class Generals {
     @SuppressLint("HardwareIds")
     public static String getFingerprintId(Context context) {
         return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+    }
+
+    public static Phonenumber.PhoneNumber getPhoneNumber(String rawPhoneNumber) {
+        try {
+            return PhoneNumberUtil.getInstance().parse(rawPhoneNumber, "ID");
+        } catch (Exception ex) {
+            Log.wtf(TAG, ex);
+        }
+
+        return null;
+    }
+
+    public static String getDialCode(Phonenumber.PhoneNumber phoneNumber) {
+        if (phoneNumber != null) {
+            DialCode dialCode = null;
+
+            for (DialCode dialCodeCheck : DialCode.DIAL_CODES) {
+                if (StringUtils.equals(dialCodeCheck.getDialCode(), ("+" + phoneNumber.getCountryCode()))) {
+                    dialCode = dialCodeCheck;
+                    break;
+                }
+            }
+
+            if (dialCode != null) {
+                return dialCode.getDialCode();
+            }
+        }
+
+        return null;
     }
 }
