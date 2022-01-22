@@ -120,21 +120,6 @@ public class MerchantRegisterActivity extends AppCompatActivity implements Stepp
     @Override
     public void onReturn() {}
 
-    private void toolbar() {
-        this.setSupportActionBar(this.toolbar);
-
-        if (this.getSupportActionBar() != null) {
-            this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            this.getSupportActionBar().setHomeButtonEnabled(true);
-        }
-    }
-
-    private void widget() {
-        this.stepperLayout.setOffscreenPageLimit(3);
-        this.stepperLayout.setAdapter(new MerchantRegisterStepperAdapter(this.getSupportFragmentManager(), this));
-        this.stepperLayout.setListener(this);
-    }
-
     @Override
     public ProgressBar getProgressBar() {
         return this.progressBar;
@@ -158,5 +143,20 @@ public class MerchantRegisterActivity extends AppCompatActivity implements Stepp
                 MerchantRegisterActivity.this.finish();
             }
         });
+    }
+
+    private void toolbar() {
+        this.setSupportActionBar(this.toolbar);
+
+        if (this.getSupportActionBar() != null) {
+            this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            this.getSupportActionBar().setHomeButtonEnabled(true);
+        }
+    }
+
+    private void widget() {
+        this.stepperLayout.setOffscreenPageLimit(3);
+        this.stepperLayout.setAdapter(new MerchantRegisterStepperAdapter(this.getSupportFragmentManager(), this));
+        this.stepperLayout.setListener(this);
     }
 }

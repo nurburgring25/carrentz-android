@@ -18,11 +18,10 @@ import org.apache.commons.lang3.StringUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
 import dev.burikk.carrentz.R;
-import dev.burikk.carrentz.api.merchant.MerchantApi;
-import dev.burikk.carrentz.api.merchant.endpoint.account.request.VerificationRequest;
-import dev.burikk.carrentz.api.merchant.endpoint.account.response.SignInResponse;
+import dev.burikk.carrentz.api.user.UserApi;
+import dev.burikk.carrentz.api.user.endpoint.account.request.VerificationRequest;
+import dev.burikk.carrentz.api.user.endpoint.account.response.SignInResponse;
 import dev.burikk.carrentz.enumeration.SharedPreferenceKey;
 import dev.burikk.carrentz.enumeration.UserType;
 import dev.burikk.carrentz.helper.Generals;
@@ -37,7 +36,7 @@ import retrofit2.Response;
  * @since 18/01/2022 11.05
  */
 @SuppressLint("NonConstantResourceId")
-public class MerchantVerificationActivity extends AppCompatActivity implements MainProtocol<Response<Void>> {
+public class UserVerificationActivity extends AppCompatActivity implements MainProtocol<Response<Void>> {
     @BindView(R.id.coordinatorLayout)
     public CoordinatorLayout coordinatorLayout;
     @BindView(R.id.toolbar)
@@ -57,7 +56,7 @@ public class MerchantVerificationActivity extends AppCompatActivity implements M
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.activity_merchant_verification);
+        super.setContentView(R.layout.activity_user_verification);
 
         ButterKnife.bind(this);
 
@@ -107,13 +106,13 @@ public class MerchantVerificationActivity extends AppCompatActivity implements M
             try (Preferences preferences = Preferences.getInstance()) {
                 preferences.begin();
                 preferences.put(SharedPreferenceKey.SESSION_ID, jwtToken);
-                preferences.put(SharedPreferenceKey.USER_TYPE, UserType.MERCHANT.name());
+                preferences.put(SharedPreferenceKey.USER_TYPE, UserType.USER.name());
                 preferences.put(SharedPreferenceKey.EMAIL, this.signInResponse.getEmail());
                 preferences.put(SharedPreferenceKey.NAME, this.signInResponse.getName());
                 preferences.commit();
             }
 
-            Generals.move(this, MerchantHomeActivity.class, true);
+            Generals.move(this, UserHomeActivity.class, true);
         }
     }
 
@@ -124,7 +123,7 @@ public class MerchantVerificationActivity extends AppCompatActivity implements M
         verificationRequest.setEmail(this.signInResponse.getEmail());
         verificationRequest.setPassword(Strings.value(this.edtPassword.getText()));
 
-        this.disposable = MerchantApi.verify(this, verificationRequest);
+        this.disposable = UserApi.verify(this, verificationRequest);
     }
 
     private void extract() {

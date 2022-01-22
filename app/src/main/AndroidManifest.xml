@@ -120,6 +120,25 @@
                 android:value=".activity.VehicleListActivity" />
 
         </activity>
+
+        <activity
+            android:name=".activity.UserRegisterActivity"
+            android:label="Daftar Pengguna Baru"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.UserVerificationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".activity.UserHomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            tools:ignore="LockedOrientationActivity" />
         <!--</editor-fold>-->
     </application>
 
