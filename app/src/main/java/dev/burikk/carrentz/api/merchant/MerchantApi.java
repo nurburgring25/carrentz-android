@@ -11,6 +11,9 @@ import dev.burikk.carrentz.api.merchant.endpoint.account.request.VerificationReq
 import dev.burikk.carrentz.api.merchant.endpoint.account.response.SignInResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.store.item.StoreItem;
 import dev.burikk.carrentz.api.merchant.endpoint.store.response.StoreListResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.vehicle.item.VehicleItem;
+import dev.burikk.carrentz.api.merchant.endpoint.vehicle.response.VehicleListResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.vehicle.response.VehicleResourceResponse;
 import dev.burikk.carrentz.helper.Dialogs;
 import dev.burikk.carrentz.helper.Views;
 import dev.burikk.carrentz.protocol.MainProtocol;
@@ -239,6 +242,133 @@ public class MerchantApi {
                         response -> {
                             if (response.isSuccessful()) {
                                 mainProtocol.result(null);
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable vehicleGet(MainProtocol<VehicleListResponse> mainProtocol) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .vehicleGet()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                VehicleListResponse vehicleListResponse = response.body();
+
+                                if (vehicleListResponse != null) {
+                                    mainProtocol.result(vehicleListResponse);
+                                } else {
+                                    error(mainProtocol, new Exception());
+                                }
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable vehiclePost(
+            MainProtocol<Object> mainProtocol,
+            VehicleItem vehicleItem
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .vehiclePost(vehicleItem)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                mainProtocol.result(vehicleItem, null);
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable vehiclePut(
+            MainProtocol<Object> mainProtocol,
+            VehicleItem vehicleItem,
+            long id
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .vehiclePut(vehicleItem, id)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                mainProtocol.result(vehicleItem, null);
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable vehicleDelete(
+            MainProtocol<Object> mainProtocol,
+            long id
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .vehicleDelete(id)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                mainProtocol.result(null);
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable vehicleResource(MainProtocol<Object> mainProtocol) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .vehicleResource()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                VehicleResourceResponse vehicleResourceResponse = response.body();
+
+                                if (vehicleResourceResponse != null) {
+                                    mainProtocol.result(vehicleResourceResponse);
+                                } else {
+                                    error(mainProtocol, new Exception());
+                                }
                             } else {
                                 error(mainProtocol, new HttpException(response));
                             }

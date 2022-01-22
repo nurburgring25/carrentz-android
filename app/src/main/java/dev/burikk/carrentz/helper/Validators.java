@@ -21,6 +21,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import dev.burikk.carrentz.view.CustomCurrencyEditText;
+
 /**
  * @author Muhammad Irfan
  * @since 28/08/2019 11.38
@@ -115,6 +117,42 @@ public class Validators {
 
                     // Ganti fokus
                     textInputEditText.requestFocus();
+
+                    return false;
+                }
+            } else if (view instanceof CustomCurrencyEditText) {
+                CustomCurrencyEditText customCurrencyEditText = (CustomCurrencyEditText) view;
+
+                // Mencari object text input layout
+                TextInputLayout textInputLayout = null;
+
+                if (customCurrencyEditText.getParent() instanceof TextInputLayout) {
+                    textInputLayout = (TextInputLayout) customCurrencyEditText.getParent();
+                } else {
+                    if (customCurrencyEditText.getParent().getParent() instanceof TextInputLayout) {
+                        textInputLayout = (TextInputLayout) customCurrencyEditText.getParent().getParent();
+                    }
+                }
+
+                // Reset kondisi
+                if (textInputLayout != null) {
+                    textInputLayout.setErrorEnabled(false);
+                    textInputLayout.setError(null);
+                } else {
+                    customCurrencyEditText.setError(null);
+                }
+
+                // Validasi
+                if (StringUtils.isBlank(customCurrencyEditText.getText())) {
+                    if (textInputLayout != null) {
+                        textInputLayout.setErrorEnabled(true);
+                        textInputLayout.setError(error);
+                    } else {
+                        customCurrencyEditText.setError(error);
+                    }
+
+                    // Ganti fokus
+                    customCurrencyEditText.requestFocus();
 
                     return false;
                 }

@@ -336,6 +336,8 @@ public class StoreFormActivity extends AppCompatActivity implements MainProtocol
             ((TextInputLayout) this.actvCity.getParent().getParent()).setEndIconOnClickListener(view -> this.city());
             ((TextInputLayout) this.actvDialCode.getParent().getParent()).setEndIconOnClickListener(view -> this.dialCode());
         } else {
+            this.editable = true;
+
             Views.visible(this.storeItem != null, this.btnEdit);
         }
     }

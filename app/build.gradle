@@ -40,6 +40,7 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.6'
     implementation 'com.stepstone.stepper:material-stepper:4.3.1'
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.2.0'
+    implementation 'com.github.faranjit:currency-edittext:1.0.1'
 
     // API related
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'

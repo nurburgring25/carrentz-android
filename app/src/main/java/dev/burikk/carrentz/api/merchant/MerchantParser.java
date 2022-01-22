@@ -6,6 +6,9 @@ import dev.burikk.carrentz.api.merchant.endpoint.account.request.VerificationReq
 import dev.burikk.carrentz.api.merchant.endpoint.account.response.SignInResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.store.item.StoreItem;
 import dev.burikk.carrentz.api.merchant.endpoint.store.response.StoreListResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.vehicle.item.VehicleItem;
+import dev.burikk.carrentz.api.merchant.endpoint.vehicle.response.VehicleListResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.vehicle.response.VehicleResourceResponse;
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.Body;
@@ -40,4 +43,19 @@ public interface MerchantParser {
 
     @DELETE("merchants/stores/{id}")
     Observable<Response<Void>> storeDelete(@Path("id") long id);
+
+    @GET("merchants/vehicles")
+    Observable<Response<VehicleListResponse>> vehicleGet();
+
+    @POST("merchants/vehicles")
+    Observable<Response<Void>> vehiclePost(@Body VehicleItem vehicleItem);
+
+    @PUT("merchants/vehicles/{id}")
+    Observable<Response<Void>> vehiclePut(@Body VehicleItem vehicleItem, @Path("id") long id);
+
+    @DELETE("merchants/vehicles/{id}")
+    Observable<Response<Void>> vehicleDelete(@Path("id") long id);
+
+    @GET("merchants/vehicles/resource")
+    Observable<Response<VehicleResourceResponse>> vehicleResource();
 }
