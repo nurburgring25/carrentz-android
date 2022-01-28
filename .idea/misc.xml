@@ -4,50 +4,28 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android/Carrentz/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.37864583333333335" />
+        <entry key="..\:/Android/Carrentz/app/src/main/res/drawable/ic_assignment.xml" value="0.20416666666666666" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/drawable/ic_facebook.xml" value="0.37864583333333335" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/drawable/ic_launcher_background.xml" value="0.37864583333333335" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.37864583333333335" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/drawable/ic_person.xml" value="0.2" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/layout/activity_merchant_register.xml" value="0.3625" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/layout/activity_merchant_welcome.xml" value="0.33" />
+        <entry key="..\:/Android/Carrentz/app/src/main/res/layout/activity_user_home.xml" value="0.33" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/layout/activity_welcome.xml" value="0.3625" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/layout/fragment_merchant_register_account.xml" value="0.3625" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/layout/fragment_merchant_register_business.xml" value="0.3625" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/layout/fragment_merchant_register_owner.xml" value="0.3625" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/layout/fragment_merchant_welcome.xml" value="0.33" />
         <entry key="..\:/Android/Carrentz/app/src/main/res/layout/fragment_user_welcome.xml" value="0.33" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/drawable-night/ic_house.xml" value="0.2675925925925926" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/drawable/ic_house.xml" value="0.2675925925925926" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/drawable/ic_more_horiz.xml" value="0.3828125" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/drawable/ic_report.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/drawable/ic_search.xml" value="0.22135416666666666" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/drawable/ic_terrain.xml" value="0.2675925925925926" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/drawable/ll_circle_home_menu.xml" value="0.3828125" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/drawable/ll_launch_screen.xml" value="0.3828125" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/drawable/shp_badge.xml" value="0.3828125" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/activity_home.xml" value="0.32065217391304346" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/activity_merchant_home.xml" value="0.25" />
+        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/activity_merchant_home.xml" value="0.2171875" />
         <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/activity_merchant_register.xml" value="0.32608695652173914" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/activity_merchant_verification.xml" value="0.32065217391304346" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/activity_store_form.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/activity_store_list.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/activity_user_home.xml" value="0.23796296296296296" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/activity_user_register.xml" value="0.1425925925925926" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/activity_user_verification.xml" value="0.23796296296296296" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/activity_vehicle_form.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/activity_vehicle_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/activity_welcome.xml" value="0.32608695652173914" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/adapter_merchant_home_menu.xml" value="0.37864583333333335" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/adapter_store_list.xml" value="0.33" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/adapter_vehicle_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/fragment_merchant_register_account.xml" value="0.32608695652173914" />
         <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/fragment_merchant_register_business.xml" value="0.23324275362318841" />
         <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/fragment_merchant_register_owner.xml" value="0.32608695652173914" />
         <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/fragment_merchant_welcome.xml" value="0.32608695652173914" />
         <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/fragment_user_welcome.xml" value="0.32608695652173914" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/layout/view_empty.xml" value="0.20520833333333333" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/menu/store_list.xml" value="0.2171875" />
-        <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/menu/vehicle_list.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
