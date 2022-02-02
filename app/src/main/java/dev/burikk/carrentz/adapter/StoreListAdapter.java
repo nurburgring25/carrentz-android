@@ -27,7 +27,7 @@ import dev.burikk.carrentz.helper.Generals;
  */
 @SuppressLint("NonConstantResourceId")
 public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.ViewHolder> {
-    private final StoreListActivity deliverySheetListActivity;
+    private final StoreListActivity storeListActivity;
     private final List<StoreItem> storeItems;
 
     {
@@ -35,7 +35,7 @@ public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.View
     }
 
     public StoreListAdapter(StoreListActivity storeListActivity) {
-        this.deliverySheetListActivity = storeListActivity;
+        this.storeListActivity = storeListActivity;
     }
 
     @NonNull
@@ -96,7 +96,7 @@ public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.View
 
                     bundle.putSerializable("STORE_ITEM", storeItem);
 
-                    Generals.move(StoreListAdapter.this.deliverySheetListActivity, StoreFormActivity.class, bundle, false);
+                    Generals.move(StoreListAdapter.this.storeListActivity, StoreFormActivity.class, bundle, false);
                 }
             }
         }

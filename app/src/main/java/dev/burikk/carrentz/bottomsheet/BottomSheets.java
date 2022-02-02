@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import dev.burikk.carrentz.CarrentzApp;
 import dev.burikk.carrentz.adapter.SpinnerAdapter;
+import dev.burikk.carrentz.api.user.endpoint.vehicle.item.UserVehicleItem;
 import dev.burikk.carrentz.helper.Dialogs;
 
 /**
@@ -195,5 +196,17 @@ public class BottomSheets {
         spinnerBottomSheet.setCancelable(cancelable);
 
         spinnerBottomSheet.show(appCompatActivity.getSupportFragmentManager(), SpinnerBottomSheet.class.getSimpleName());
+    }
+
+    public static RentBottomSheet rent(
+            AppCompatActivity appCompatActivity,
+            UserVehicleItem userVehicleItem
+    ) {
+        RentBottomSheet rentBottomSheet = RentBottomSheet.newInstance(userVehicleItem);
+
+        rentBottomSheet.setCancelable(false);
+        rentBottomSheet.show(appCompatActivity.getSupportFragmentManager(), RentBottomSheet.class.getSimpleName());
+
+        return rentBottomSheet;
     }
 }

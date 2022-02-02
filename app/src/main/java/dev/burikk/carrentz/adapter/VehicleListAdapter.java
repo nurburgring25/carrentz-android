@@ -28,7 +28,7 @@ import dev.burikk.carrentz.helper.Generals;
  */
 @SuppressLint("NonConstantResourceId")
 public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.ViewHolder> {
-    private final VehicleListActivity deliverySheetListActivity;
+    private final VehicleListActivity vehicleListActivity;
     private final List<VehicleItem> vehicleItems;
 
     {
@@ -36,7 +36,7 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
     }
 
     public VehicleListAdapter(VehicleListActivity vehicleListActivity) {
-        this.deliverySheetListActivity = vehicleListActivity;
+        this.vehicleListActivity = vehicleListActivity;
     }
 
     @NonNull
@@ -97,7 +97,7 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
 
                     bundle.putSerializable("VEHICLE_ITEM", vehicleItem);
 
-                    Generals.move(VehicleListAdapter.this.deliverySheetListActivity, VehicleFormActivity.class, bundle, false);
+                    Generals.move(VehicleListAdapter.this.vehicleListActivity, VehicleFormActivity.class, bundle, false);
                 }
             }
         }

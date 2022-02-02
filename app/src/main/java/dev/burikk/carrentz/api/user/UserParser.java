@@ -4,10 +4,17 @@ import dev.burikk.carrentz.api.user.endpoint.account.request.RegisterRequest;
 import dev.burikk.carrentz.api.user.endpoint.account.request.SignInRequest;
 import dev.burikk.carrentz.api.user.endpoint.account.request.VerificationRequest;
 import dev.burikk.carrentz.api.user.endpoint.account.response.SignInResponse;
+import dev.burikk.carrentz.api.user.endpoint.home.response.HomeVehicleTypeResponse;
+import dev.burikk.carrentz.api.user.endpoint.store.response.UserStoreListResponse;
+import dev.burikk.carrentz.api.user.endpoint.vehicle.response.UserVehicleListResponse;
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * @author Muhammad Irfan
@@ -22,4 +29,13 @@ public interface UserParser {
 
     @POST("users/verify")
     Observable<Response<Void>> verify(@Body VerificationRequest verificationRequest);
+
+    @GET("users/homes/vehicle-type")
+    Observable<Response<HomeVehicleTypeResponse>> homeVehicleType();
+
+    @GET("users/stores")
+    Observable<Response<UserStoreListResponse>> userStoreList();
+
+    @GET("users/vehicles")
+    Observable<Response<UserVehicleListResponse>> userVehicleList(@Query("storeId") long id);
 }
