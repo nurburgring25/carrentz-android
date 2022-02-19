@@ -5,6 +5,7 @@ import dev.burikk.carrentz.api.user.endpoint.account.request.SignInRequest;
 import dev.burikk.carrentz.api.user.endpoint.account.request.VerificationRequest;
 import dev.burikk.carrentz.api.user.endpoint.account.response.SignInResponse;
 import dev.burikk.carrentz.api.user.endpoint.home.response.HomeVehicleTypeResponse;
+import dev.burikk.carrentz.api.user.endpoint.rent.request.RentRequest;
 import dev.burikk.carrentz.api.user.endpoint.store.response.UserStoreListResponse;
 import dev.burikk.carrentz.api.user.endpoint.vehicle.response.UserVehicleListResponse;
 import io.reactivex.Observable;
@@ -38,4 +39,7 @@ public interface UserParser {
 
     @GET("users/vehicles")
     Observable<Response<UserVehicleListResponse>> userVehicleList(@Query("storeId") long id);
+
+    @POST("users/rents")
+    Observable<Response<Void>> rent(@Body RentRequest rentRequest);
 }

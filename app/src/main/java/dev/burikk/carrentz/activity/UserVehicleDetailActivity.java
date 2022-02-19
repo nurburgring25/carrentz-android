@@ -18,6 +18,7 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ViewListener;
 
+import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.TimeZone;
 
@@ -25,8 +26,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dev.burikk.carrentz.R;
+import dev.burikk.carrentz.api.user.UserApi;
+import dev.burikk.carrentz.api.user.endpoint.rent.request.RentRequest;
 import dev.burikk.carrentz.api.user.endpoint.vehicle.item.UserVehicleItem;
+import dev.burikk.carrentz.bottomsheet.BottomSheets;
+import dev.burikk.carrentz.bottomsheet.MessageBottomSheet;
 import dev.burikk.carrentz.helper.Formats;
+import dev.burikk.carrentz.helper.Generals;
 import dev.burikk.carrentz.protocol.MainProtocol;
 import io.reactivex.disposables.Disposable;
 
@@ -130,12 +136,22 @@ public class UserVehicleDetailActivity extends AppCompatActivity implements Main
     }
 
     @Override
-    public void result(Object request, Object data) {
+    public void result(Object data) {
+        BottomSheets.message(
+                this,
+                "Mobil berhasil disewa.",
+                new MessageBottomSheet.MessageBottomSheetCallback() {
+                    @Override
+                    public void dismiss() {
+                        Generals.move(UserVehicleDetailActivity.this, UserHomeActivity.class, true);
+                    }
 
+                    @Override
+                    public void cancel() {
+                        Generals.move(UserVehicleDetailActivity.this, UserHomeActivity.class, true);
+                    }
+                });
     }
-
-    @Override
-    public void result(Object data) {}
 
     @OnClick(R.id.btnRentThisCar)
     public void rentThisCar() {
@@ -162,6 +178,14 @@ public class UserVehicleDetailActivity extends AppCompatActivity implements Main
                     UserVehicleDetailActivity.this.cldTo.set(Calendar.SECOND, 0);
                     UserVehicleDetailActivity.this.cldTo.set(Calendar.MILLISECOND, 0);
                 }
+
+                RentRequest rentRequest = new RentRequest();
+
+                rentRequest.setVehicleId(UserVehicleDetailActivity.this.userVehicleItem.getId());
+                rentRequest.setStart(UserVehicleDetailActivity.this.cldFrom.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+                rentRequest.setUntil(UserVehicleDetailActivity.this.cldTo.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+
+                UserVehicleDetailActivity.this.disposable = UserApi.rent(UserVehicleDetailActivity.this, rentRequest);
             }
         });
 

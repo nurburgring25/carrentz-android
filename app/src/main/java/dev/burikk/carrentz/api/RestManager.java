@@ -9,6 +9,9 @@ import androidx.annotation.NonNull;
 import com.google.gson.GsonBuilder;
 
 import java.security.cert.X509Certificate;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +21,14 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import dev.burikk.carrentz.api.converter.CustomConverterFactory;
+import dev.burikk.carrentz.api.deserializer.CustomDateDeserializer;
+import dev.burikk.carrentz.api.deserializer.CustomDateTimeDeserializer;
+import dev.burikk.carrentz.api.deserializer.CustomTimeDeserializer;
 import dev.burikk.carrentz.api.interceptor.AuthenticationInterceptor;
+import dev.burikk.carrentz.api.serializer.CustomDateSerializer;
+import dev.burikk.carrentz.api.serializer.CustomDateTimeSerializer;
+import dev.burikk.carrentz.api.serializer.CustomTimeSerializer;
 import dev.burikk.carrentz.common.Constant;
 import okhttp3.Cookie;
 import okhttp3.CookieJar;
@@ -107,9 +117,16 @@ public class RestManager {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(
                         new GsonBuilder()
-                                .setLenient()
+                                .registerTypeAdapter(LocalDateTime.class, new CustomDateTimeDeserializer())
+                                .registerTypeAdapter(LocalDate.class, new CustomDateDeserializer())
+                                .registerTypeAdapter(LocalTime.class, new CustomTimeDeserializer())
+                                .registerTypeAdapter(LocalDateTime.class, new CustomDateTimeSerializer())
+                                .registerTypeAdapter(LocalDate.class, new CustomDateSerializer())
+                                .registerTypeAdapter(LocalTime.class, new CustomTimeSerializer())
                                 .create()
-                ))
+                        )
+                )
+                .addConverterFactory(new CustomConverterFactory())
                 .build();
     }
 }

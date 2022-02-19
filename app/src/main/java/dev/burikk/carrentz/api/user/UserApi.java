@@ -10,6 +10,7 @@ import dev.burikk.carrentz.api.user.endpoint.account.request.SignInRequest;
 import dev.burikk.carrentz.api.user.endpoint.account.request.VerificationRequest;
 import dev.burikk.carrentz.api.user.endpoint.account.response.SignInResponse;
 import dev.burikk.carrentz.api.user.endpoint.home.response.HomeVehicleTypeResponse;
+import dev.burikk.carrentz.api.user.endpoint.rent.request.RentRequest;
 import dev.burikk.carrentz.api.user.endpoint.store.response.UserStoreListResponse;
 import dev.burikk.carrentz.api.user.endpoint.vehicle.response.UserVehicleListResponse;
 import dev.burikk.carrentz.helper.Dialogs;
@@ -225,6 +226,30 @@ public class UserApi {
                                 } else {
                                     error(mainProtocol, new Exception());
                                 }
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable rent(
+            MainProtocol<Object> mainProtocol,
+            RentRequest rentRequest
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(UserParser.class)
+                .rent(rentRequest)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                mainProtocol.result(null);
                             } else {
                                 error(mainProtocol, new HttpException(response));
                             }
