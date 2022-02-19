@@ -41,6 +41,8 @@ public class MerchantHomeActivity extends AppCompatActivity implements MerchantH
             Generals.move(this, StoreListActivity.class, false);
         } else if (merchantHomeMenuItem == MerchantHomeMenuItem.VEHICLE) {
             Generals.move(this, VehicleListActivity.class, false);
+        } else if (merchantHomeMenuItem == MerchantHomeMenuItem.RENT) {
+            Generals.move(this, MerchantRentListActivity.class, false);
         }
     }
 

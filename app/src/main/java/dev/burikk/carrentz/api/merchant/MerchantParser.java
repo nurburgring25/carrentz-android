@@ -4,6 +4,7 @@ import dev.burikk.carrentz.api.merchant.endpoint.account.request.RegisterRequest
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.SignInRequest;
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.VerificationRequest;
 import dev.burikk.carrentz.api.merchant.endpoint.account.response.SignInResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.rent.response.MerchantRentListResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.store.item.StoreItem;
 import dev.burikk.carrentz.api.merchant.endpoint.store.response.StoreListResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.vehicle.item.VehicleItem;
@@ -58,4 +59,7 @@ public interface MerchantParser {
 
     @GET("merchants/vehicles/resource")
     Observable<Response<VehicleResourceResponse>> vehicleResource();
+
+    @GET("merchants/rents")
+    Observable<Response<MerchantRentListResponse>> rentGet();
 }

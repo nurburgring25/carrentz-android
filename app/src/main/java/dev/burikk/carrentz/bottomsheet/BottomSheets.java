@@ -2,6 +2,7 @@ package dev.burikk.carrentz.bottomsheet;
 
 import android.app.Dialog;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -9,14 +10,18 @@ import android.widget.FrameLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.ArrayList;
 
 import dev.burikk.carrentz.CarrentzApp;
+import dev.burikk.carrentz.R;
 import dev.burikk.carrentz.adapter.SpinnerAdapter;
+import dev.burikk.carrentz.api.merchant.endpoint.rent.item.MerchantRentItem;
 import dev.burikk.carrentz.api.user.endpoint.vehicle.item.UserVehicleItem;
 import dev.burikk.carrentz.helper.Dialogs;
+import dev.burikk.carrentz.helper.Generals;
 
 /**
  * @author Muhammad Irfan
@@ -44,6 +49,26 @@ public class BottomSheets {
                 }
             }
         });
+    }
+
+    public static void fullHeight(BottomSheetDialog bottomSheetDialog) {
+        FrameLayout frameLayout = bottomSheetDialog.findViewById(R.id.design_bottom_sheet);
+
+        if (frameLayout != null) {
+            BottomSheetBehavior<FrameLayout> bottomSheetBehavior = BottomSheetBehavior.from(frameLayout);
+
+            ViewGroup.LayoutParams layoutParams = frameLayout.getLayoutParams();
+
+            int windowHeight = Generals.screenHeight(bottomSheetDialog.getContext());
+
+            if (layoutParams != null) {
+                layoutParams.height = windowHeight;
+            }
+
+            frameLayout.setLayoutParams(layoutParams);
+
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
     }
 
     public static void message(
@@ -208,5 +233,17 @@ public class BottomSheets {
         rentBottomSheet.show(appCompatActivity.getSupportFragmentManager(), RentBottomSheet.class.getSimpleName());
 
         return rentBottomSheet;
+    }
+
+    public static MerchantRentBottomSheet rent(
+            AppCompatActivity appCompatActivity,
+            MerchantRentItem merchantRentItem
+    ) {
+        MerchantRentBottomSheet merchantRentBottomSheet = MerchantRentBottomSheet.newInstance(merchantRentItem);
+
+        merchantRentBottomSheet.setCancelable(false);
+        merchantRentBottomSheet.show(appCompatActivity.getSupportFragmentManager(), MerchantRentBottomSheet.class.getSimpleName());
+
+        return merchantRentBottomSheet;
     }
 }

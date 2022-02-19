@@ -9,6 +9,7 @@ import dev.burikk.carrentz.api.merchant.endpoint.account.request.RegisterRequest
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.SignInRequest;
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.VerificationRequest;
 import dev.burikk.carrentz.api.merchant.endpoint.account.response.SignInResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.rent.response.MerchantRentListResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.store.item.StoreItem;
 import dev.burikk.carrentz.api.merchant.endpoint.store.response.StoreListResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.vehicle.item.VehicleItem;
@@ -366,6 +367,33 @@ public class MerchantApi {
 
                                 if (vehicleResourceResponse != null) {
                                     mainProtocol.result(vehicleResourceResponse);
+                                } else {
+                                    error(mainProtocol, new Exception());
+                                }
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable rentGet(MainProtocol<MerchantRentListResponse> mainProtocol) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .rentGet()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                MerchantRentListResponse merchantRentListResponse = response.body();
+
+                                if (merchantRentListResponse != null) {
+                                    mainProtocol.result(merchantRentListResponse);
                                 } else {
                                     error(mainProtocol, new Exception());
                                 }

@@ -2,6 +2,14 @@ package dev.burikk.carrentz.helper;
 
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.Period;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.Locale;
 
@@ -115,5 +123,117 @@ public class DataTypes {
         }
 
         return BigDecimal.ZERO;
+    }
+
+    public static LocalDateTime toLocalDateTime(Long millis) {
+        if (millis != null) {
+            return Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault()).toLocalDateTime();
+        }
+
+        return null;
+    }
+
+    public static LocalDate toLocalDate(Long millis) {
+        if (millis != null) {
+            return Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault()).toLocalDate();
+        }
+
+        return null;
+    }
+
+    public static LocalTime toLocalTime(Long millis) {
+        if (millis != null) {
+            return Instant.ofEpochMilli(millis).atZone(ZoneId.systemDefault()).toLocalTime();
+        }
+
+        return null;
+    }
+
+    public static LocalDateTime toLocalDateTime(Date date) {
+        if (date != null) {
+            return toLocalDateTime(date.getTime());
+        }
+
+        return null;
+    }
+
+    public static LocalDate toLocalDate(Date date) {
+        if (date != null) {
+            return toLocalDate(date.getTime());
+        }
+
+        return null;
+    }
+
+    public static LocalTime toLocalTime(Date date) {
+        if (date != null) {
+            return toLocalTime(date.getTime());
+        }
+
+        return null;
+    }
+
+    public static Long toEpochMillis(LocalDateTime localDateTime) {
+        if (localDateTime != null) {
+            return localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        }
+
+        return null;
+    }
+
+    public static Long toEpochMillis(LocalDate localDate) {
+        if (localDate != null) {
+            return localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        }
+
+        return null;
+    }
+
+    public static Date toDate(LocalDateTime localDateTime) {
+        Long millis = toEpochMillis(localDateTime);
+
+        if (millis != null) {
+            return new Date(millis);
+        }
+
+        return null;
+    }
+
+    public static Date toDate(LocalDate localDate) {
+        Long millis = toEpochMillis(localDate);
+
+        if (millis != null) {
+            return new Date(millis);
+        }
+
+        return null;
+    }
+
+    public static Date toDate(LocalTime localTime) {
+        Long millis = toEpochMillis(LocalDateTime.of(LocalDate.now(), localTime));
+
+        if (millis != null) {
+            return new Date(millis);
+        }
+
+        return null;
+    }
+
+    public static String translate(LocalDate localDate) {
+        if (localDate != null) {
+            Period period = Period.between(localDate, LocalDate.now());
+
+            long difference = period.get(ChronoUnit.DAYS);
+
+            if (difference == 0) {
+                return "Hari Ini";
+            } else if (difference == 1) {
+                return "Kemarin";
+            } else {
+                return localDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            }
+        }
+
+        return null;
     }
 }
