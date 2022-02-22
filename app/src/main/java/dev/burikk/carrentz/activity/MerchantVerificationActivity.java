@@ -110,6 +110,8 @@ public class MerchantVerificationActivity extends AppCompatActivity implements M
                 preferences.put(SharedPreferenceKey.USER_TYPE, UserType.MERCHANT.name());
                 preferences.put(SharedPreferenceKey.EMAIL, this.signInResponse.getEmail());
                 preferences.put(SharedPreferenceKey.NAME, this.signInResponse.getName());
+                preferences.put(SharedPreferenceKey.MERCHANT_ID, this.signInResponse.getMerchantId());
+                preferences.put(SharedPreferenceKey.MERCHANT_NAME, this.signInResponse.getMerchantName());
                 preferences.commit();
             }
 

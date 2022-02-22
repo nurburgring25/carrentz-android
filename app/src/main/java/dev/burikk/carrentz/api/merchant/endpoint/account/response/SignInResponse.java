@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class SignInResponse implements Serializable {
     private String email;
     private String name;
+    private Long merchantId;
+    private String merchantName;
 
     public String getEmail() {
         return email;
@@ -20,5 +22,21 @@ public class SignInResponse implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getMerchantId() {
+        return this.merchantId;
+    }
+
+    public void setMerchantId(Long merchantId) {
+        this.merchantId = merchantId;
+    }
+
+    public String getMerchantName() {
+        return this.merchantName;
+    }
+
+    public void setMerchantName(String merchantName) {
+        this.merchantName = merchantName;
     }
 }

@@ -142,6 +142,24 @@
         </activity>
 
         <activity
+            android:name=".activity.MerchantAccountActivity"
+            android:label="Akun"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:exported="false"
+            tools:ignore="LockedOrientationActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MerchantHomeActivity" />
+
+        </activity>
+
+        <activity
             android:name=".activity.UserRegisterActivity"
             android:label="Daftar Pengguna Baru"
             android:screenOrientation="portrait"

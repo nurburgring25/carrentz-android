@@ -12,7 +12,7 @@ public enum MerchantHomeMenuItem {
     STORE(R.drawable.ic_store, "Cabang"),
     VEHICLE(R.drawable.ic_directions_car, "Mobil"),
     RENT(R.drawable.ic_assignment, "Rental"),
-    PROFILE(R.drawable.ic_person, "Profil"),
+    ACCOUNT(R.drawable.ic_person, "Akun"),
     RENT_REPORT(R.drawable.ic_bar_chart, "Laporan Rental"),
     VEHICLE_AVAILABILITY(R.drawable.ic_departure_board, "Ketersediaan Mobil");
 

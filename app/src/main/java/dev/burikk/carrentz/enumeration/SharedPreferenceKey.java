@@ -8,5 +8,7 @@ public enum SharedPreferenceKey {
     SESSION_ID,
     USER_TYPE,
     NAME,
-    EMAIL
+    EMAIL,
+    MERCHANT_ID,
+    MERCHANT_NAME
 }
