@@ -16,6 +16,7 @@ import com.google.android.material.navigation.NavigationBarView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dev.burikk.carrentz.R;
+import dev.burikk.carrentz.fragment.UserHistoryFragment;
 import dev.burikk.carrentz.fragment.UserHomeFragment;
 import dev.burikk.carrentz.fragment.UserAccountFragment;
 
@@ -45,7 +46,7 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationBar
         if (item.getItemId() == R.id.mniHome) {
             fragment = new UserHomeFragment();
         } else if (item.getItemId() == R.id.mniHistory) {
-
+            fragment = new UserHistoryFragment();
         } else if (item.getItemId() == R.id.mniAccount) {
             fragment = new UserAccountFragment();
         }

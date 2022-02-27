@@ -19,6 +19,7 @@ import dev.burikk.carrentz.CarrentzApp;
 import dev.burikk.carrentz.R;
 import dev.burikk.carrentz.adapter.SpinnerAdapter;
 import dev.burikk.carrentz.api.merchant.endpoint.rent.item.MerchantRentItem;
+import dev.burikk.carrentz.api.user.endpoint.rent.item.UserRentItem;
 import dev.burikk.carrentz.api.user.endpoint.vehicle.item.UserVehicleItem;
 import dev.burikk.carrentz.helper.Dialogs;
 import dev.burikk.carrentz.helper.Generals;
@@ -235,7 +236,7 @@ public class BottomSheets {
         return rentBottomSheet;
     }
 
-    public static MerchantRentBottomSheet rent(
+    public static MerchantRentBottomSheet merchantRent(
             AppCompatActivity appCompatActivity,
             MerchantRentItem merchantRentItem
     ) {
@@ -245,5 +246,17 @@ public class BottomSheets {
         merchantRentBottomSheet.show(appCompatActivity.getSupportFragmentManager(), MerchantRentBottomSheet.class.getSimpleName());
 
         return merchantRentBottomSheet;
+    }
+
+    public static UserRentBottomSheet userRent(
+            AppCompatActivity appCompatActivity,
+            UserRentItem userRentItem
+    ) {
+        UserRentBottomSheet userRentBottomSheet = UserRentBottomSheet.newInstance(userRentItem);
+
+        userRentBottomSheet.setCancelable(false);
+        userRentBottomSheet.show(appCompatActivity.getSupportFragmentManager(), UserRentBottomSheet.class.getSimpleName());
+
+        return userRentBottomSheet;
     }
 }

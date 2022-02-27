@@ -13,8 +13,8 @@ public class Constant {
 
     public static class URL {
         // public static final String BASE = "http://172.16.50.212:8080/carrentz/api/";
-        // public static final String BASE = "http://192.168.100.76:8080/carrentz/api/";
+        public static final String BASE = "http://192.168.100.76:8080/carrentz/api/";
         // public static final String BASE = "http://192.168.137.1:8080/carrentz/api/";
-        public static final String BASE = "http://192.168.41.21:8080/carrentz/api/";
+        // public static final String BASE = "http://192.168.41.21:8080/carrentz/api/";
     }
 }

@@ -42,7 +42,6 @@ public class MerchantRentListActivity extends AppCompatActivity implements MainP
     @BindView(R.id.viewPager)
     public ViewPager2 viewPager;
 
-
     public Disposable disposable;
     public CountDownTimer countDownTimer;
     public String searchTerm;

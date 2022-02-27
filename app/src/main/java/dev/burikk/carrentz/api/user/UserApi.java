@@ -11,6 +11,7 @@ import dev.burikk.carrentz.api.user.endpoint.account.request.VerificationRequest
 import dev.burikk.carrentz.api.user.endpoint.account.response.SignInResponse;
 import dev.burikk.carrentz.api.user.endpoint.home.response.HomeVehicleTypeResponse;
 import dev.burikk.carrentz.api.user.endpoint.rent.request.RentRequest;
+import dev.burikk.carrentz.api.user.endpoint.rent.response.UserRentListResponse;
 import dev.burikk.carrentz.api.user.endpoint.store.response.UserStoreListResponse;
 import dev.burikk.carrentz.api.user.endpoint.vehicle.response.UserVehicleListResponse;
 import dev.burikk.carrentz.helper.Dialogs;
@@ -19,7 +20,6 @@ import dev.burikk.carrentz.protocol.MainProtocol;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.ResponseBody;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
@@ -250,6 +250,33 @@ public class UserApi {
                         response -> {
                             if (response.isSuccessful()) {
                                 mainProtocol.result(null);
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable rentGet(MainProtocol<UserRentListResponse> mainProtocol) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(UserParser.class)
+                .rentGet()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                UserRentListResponse userRentListResponse = response.body();
+
+                                if (userRentListResponse != null) {
+                                    mainProtocol.result(userRentListResponse);
+                                } else {
+                                    error(mainProtocol, new Exception());
+                                }
                             } else {
                                 error(mainProtocol, new HttpException(response));
                             }

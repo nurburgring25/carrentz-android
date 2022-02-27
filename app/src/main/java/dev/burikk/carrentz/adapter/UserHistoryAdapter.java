@@ -15,8 +15,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dev.burikk.carrentz.R;
-import dev.burikk.carrentz.activity.MerchantRentListActivity;
-import dev.burikk.carrentz.api.merchant.endpoint.rent.item.MerchantRentItem;
+import dev.burikk.carrentz.activity.UserHomeActivity;
+import dev.burikk.carrentz.api.user.endpoint.rent.item.UserRentItem;
 import dev.burikk.carrentz.bottomsheet.BottomSheets;
 import dev.burikk.carrentz.helper.DataTypes;
 
@@ -25,51 +25,54 @@ import dev.burikk.carrentz.helper.DataTypes;
  * @since 22/12/2021 10.29
  */
 @SuppressLint("NonConstantResourceId")
-public class MerchantRentListAdapter extends RecyclerView.Adapter<MerchantRentListAdapter.ViewHolder> {
-    private final MerchantRentListActivity merchantRentListActivity;
-    private final List<MerchantRentItem> merchantRentItems;
+public class UserHistoryAdapter extends RecyclerView.Adapter<UserHistoryAdapter.ViewHolder> {
+    private final UserHomeActivity userHomeActivity;
+    private final List<UserRentItem> userRentItems;
 
     {
-        this.merchantRentItems = new ArrayList<>();
+        this.userRentItems = new ArrayList<>();
     }
 
-    public MerchantRentListAdapter(MerchantRentListActivity merchantRentListActivity) {
-        this.merchantRentListActivity = merchantRentListActivity;
+    public UserHistoryAdapter(UserHomeActivity userHomeActivity) {
+        this.userHomeActivity = userHomeActivity;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_merchant_rent_list, parent, false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_user_history, parent, false));
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         if (i != RecyclerView.NO_POSITION) {
-            MerchantRentItem merchantRentItem = this.merchantRentItems.get(i);
+            UserRentItem userRentItem = this.userRentItems.get(i);
 
-            if (merchantRentItem != null) {
-                viewHolder.txvNumber.setText(merchantRentItem.getNumber());
-                viewHolder.txvCustomer.setText(merchantRentItem.getUser().getId());
-                viewHolder.txvVehicle.setText(merchantRentItem.getVehicle().getName());
-                viewHolder.txvDate.setText(DataTypes.translate(merchantRentItem.getStart()) + " - " + DataTypes.translate(merchantRentItem.getUntil()));
+            if (userRentItem != null) {
+                viewHolder.txvNumber.setText(userRentItem.getNumber());
+                viewHolder.txvStatus.setText(userRentItem.getStatus());
+                viewHolder.txvCustomer.setText(userRentItem.getUser().getId());
+                viewHolder.txvVehicle.setText(userRentItem.getVehicle().getName());
+                viewHolder.txvDate.setText(DataTypes.translate(userRentItem.getStart()) + " - " + DataTypes.translate(userRentItem.getUntil()));
             }
         }
     }
 
     @Override
     public int getItemCount() {
-        return this.merchantRentItems.size();
+        return this.userRentItems.size();
     }
 
-    public List<MerchantRentItem> getMerchantRentItems() {
-        return merchantRentItems;
+    public List<UserRentItem> getUserRentItems() {
+        return userRentItems;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView(R.id.txvNumber)
         public TextView txvNumber;
+        @BindView(R.id.txvStatus)
+        public TextView txvStatus;
         @BindView(R.id.txvCustomer)
         public TextView txvCustomer;
         @BindView(R.id.txvVehicle)
@@ -88,10 +91,10 @@ public class MerchantRentListAdapter extends RecyclerView.Adapter<MerchantRentLi
         @Override
         public void onClick(View v) {
             if (this.getBindingAdapterPosition() != RecyclerView.NO_POSITION) {
-                MerchantRentItem merchantRentItem = MerchantRentListAdapter.this.merchantRentItems.get(this.getBindingAdapterPosition());
+                UserRentItem userRentItem = UserHistoryAdapter.this.userRentItems.get(this.getBindingAdapterPosition());
 
-                if (merchantRentItem != null) {
-                    BottomSheets.merchantRent(MerchantRentListAdapter.this.merchantRentListActivity, merchantRentItem);
+                if (userRentItem != null) {
+                    BottomSheets.userRent(UserHistoryAdapter.this.userHomeActivity, userRentItem);
                 }
             }
         }

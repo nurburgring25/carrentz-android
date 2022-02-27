@@ -6,15 +6,14 @@ import dev.burikk.carrentz.api.user.endpoint.account.request.VerificationRequest
 import dev.burikk.carrentz.api.user.endpoint.account.response.SignInResponse;
 import dev.burikk.carrentz.api.user.endpoint.home.response.HomeVehicleTypeResponse;
 import dev.burikk.carrentz.api.user.endpoint.rent.request.RentRequest;
+import dev.burikk.carrentz.api.user.endpoint.rent.response.UserRentListResponse;
 import dev.burikk.carrentz.api.user.endpoint.store.response.UserStoreListResponse;
 import dev.burikk.carrentz.api.user.endpoint.vehicle.response.UserVehicleListResponse;
 import io.reactivex.Observable;
-import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -42,4 +41,7 @@ public interface UserParser {
 
     @POST("users/rents")
     Observable<Response<Void>> rent(@Body RentRequest rentRequest);
+
+    @GET("users/rents")
+    Observable<Response<UserRentListResponse>> rentGet();
 }
