@@ -16,6 +16,9 @@ import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.button.MaterialButton;
+
+import org.apache.commons.lang3.StringUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,9 +27,12 @@ import butterknife.Unbinder;
 import dev.burikk.carrentz.R;
 import dev.burikk.carrentz.activity.UserHomeActivity;
 import dev.burikk.carrentz.api.user.endpoint.rent.item.UserRentItem;
+import dev.burikk.carrentz.dialog.Dialogs;
+import dev.burikk.carrentz.enumeration.DocumentStatus;
 import dev.burikk.carrentz.helper.DataTypes;
 import dev.burikk.carrentz.helper.Formats;
 import dev.burikk.carrentz.helper.Keyboards;
+import dev.burikk.carrentz.helper.Views;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -65,6 +71,10 @@ public class UserRentBottomSheet extends BottomSheetDialogFragment {
     public TextView txvCostPerDay;
     @BindView(R.id.txvTotal)
     public TextView txvTotal;
+    @BindView(R.id.btnTakeTheCar)
+    public MaterialButton btnTakeTheCar;
+    @BindView(R.id.btnReturnTheCar)
+    public MaterialButton btnReturnTheCar;
 
     public UserHomeActivity userHomeActivity;
     public UserRentItem userRentItem;
@@ -142,6 +152,24 @@ public class UserRentBottomSheet extends BottomSheetDialogFragment {
         this.dismiss();
     }
 
+    @OnClick(R.id.btnTakeTheCar)
+    public void takeTheCar() {
+        Dialogs.userTakeTheCar(
+                this.userHomeActivity,
+                this.userRentItem,
+                this::close
+        );
+    }
+
+    @OnClick(R.id.btnReturnTheCar)
+    public void returnTheCar() {
+        Dialogs.userReturnTheCar(
+                this.userHomeActivity,
+                this.userRentItem,
+                this::close
+        );
+    }
+
     private void extract() {
         if (this.getArguments() != null) {
             this.userRentItem = (UserRentItem) this.getArguments().getSerializable("USER_RENT_ITEM");
@@ -165,5 +193,18 @@ public class UserRentBottomSheet extends BottomSheetDialogFragment {
         this.txvDuration.setText(Formats.getCurrencyFormat(this.userRentItem.getDuration().longValue(), false) + " Hari");
         this.txvCostPerDay.setText(Formats.getCurrencyFormat(this.userRentItem.getCostPerDay().longValue()));
         this.txvTotal.setText(Formats.getCurrencyFormat(this.userRentItem.getTotal().longValue()));
+
+        Views.gone(
+                this.btnTakeTheCar,
+                this.btnReturnTheCar
+        );
+
+        if (StringUtils.equals(this.userRentItem.getStatus(), DocumentStatus.OPENED.name())) {
+            Views.visible(this.btnTakeTheCar);
+        }
+
+        if (StringUtils.equals(this.userRentItem.getStatus(), DocumentStatus.ONGOING.name())) {
+            Views.visible(this.btnReturnTheCar);
+        }
     }
 }

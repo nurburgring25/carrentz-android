@@ -286,4 +286,54 @@ public class UserApi {
                         disposable -> process(mainProtocol)
                 );
     }
+
+    public static Disposable rentTakeTheCar(
+            MainProtocol<Void> mainProtocol,
+            Long id,
+            String code
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(UserParser.class)
+                .rentTakeTheCar(id, code)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                mainProtocol.result(null);
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable rentReturnTheCar(
+            MainProtocol<Void> mainProtocol,
+            Long id,
+            String code
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(UserParser.class)
+                .rentReturnTheCar(id, code)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                mainProtocol.result(null);
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
 }

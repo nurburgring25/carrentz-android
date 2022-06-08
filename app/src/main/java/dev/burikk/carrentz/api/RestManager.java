@@ -38,6 +38,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
  * @author Muhammad Irfan
@@ -115,6 +116,7 @@ public class RestManager {
                 .baseUrl(Constant.URL.BASE)
                 .client(okHttpClient)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(
                         new GsonBuilder()
                                 .registerTypeAdapter(LocalDateTime.class, new CustomDateTimeDeserializer())

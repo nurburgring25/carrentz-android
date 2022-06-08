@@ -62,4 +62,13 @@ public interface MerchantParser {
 
     @GET("merchants/rents")
     Observable<Response<MerchantRentListResponse>> rentGet();
+
+    @GET("merchants/rents/{id}/get-rent-code")
+    Observable<Response<String>> rentGetRentCode(@Path("id") Long id);
+
+    @GET("merchants/rents/{id}/get-return-code")
+    Observable<Response<String>> rentGetReturnCode(@Path("id") Long id);
+
+    @DELETE("merchants/rents/{id}")
+    Observable<Response<Void>> cancelRent(@Path("id") Long id);
 }

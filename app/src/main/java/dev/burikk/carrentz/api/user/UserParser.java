@@ -14,6 +14,7 @@ import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**
@@ -44,4 +45,10 @@ public interface UserParser {
 
     @GET("users/rents")
     Observable<Response<UserRentListResponse>> rentGet();
+
+    @GET("users/rents/{id}/take-the-car")
+    Observable<Response<Void>> rentTakeTheCar(@Path("id") Long id, @Query("code") String code);
+
+    @GET("users/rents/{id}/return-the-car")
+    Observable<Response<Void>> rentReturnTheCar(@Path("id") Long id, @Query("code") String code);
 }

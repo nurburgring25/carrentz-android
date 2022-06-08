@@ -45,6 +45,11 @@
         <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/menu/user_store_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/menu/user_vehicle_list.xml" value="0.2601851851851852" />
         <entry key="..\:/Users/MI3 Work/StudioProjects/carrentz-android/app/src/main/res/menu/vehicle_list.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/activity_user_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/bottom_sheet_merchant_rent.xml" value="0.33" />
+        <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/bottom_sheet_user_rent.xml" value="0.2798913043478261" />
+        <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/dialog_user_return_the_car.xml" value="0.30092592592592593" />
+        <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/dialog_user_take_the_car.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

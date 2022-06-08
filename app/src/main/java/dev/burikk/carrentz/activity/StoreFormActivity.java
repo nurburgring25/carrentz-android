@@ -319,6 +319,7 @@ public class StoreFormActivity extends AppCompatActivity implements MainProtocol
             this.edtAddress.setText(this.storeItem.getAddress());
             this.actvCity.setText(this.storeItem.getCity());
         } else {
+            this.editable = true;
             this.actvDialCode.setText("+62");
         }
 

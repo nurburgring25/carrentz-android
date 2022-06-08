@@ -406,4 +406,88 @@ public class MerchantApi {
                         disposable -> process(mainProtocol)
                 );
     }
+
+    public static Disposable rentGetRentCode(
+            MainProtocol<Object> mainProtocol,
+            Long id
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .rentGetRentCode(id)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                String code = response.body();
+
+                                if (StringUtils.isNotBlank(code)) {
+                                    mainProtocol.result(1, code);
+                                } else {
+                                    error(mainProtocol, new Exception());
+                                }
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable rentGetReturnCode(
+            MainProtocol<Object> mainProtocol,
+            Long id
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .rentGetReturnCode(id)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                String code = response.body();
+
+                                if (StringUtils.isNotBlank(code)) {
+                                    mainProtocol.result(2, code);
+                                } else {
+                                    error(mainProtocol, new Exception());
+                                }
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable cancelRent(
+            MainProtocol<Object> mainProtocol,
+            Long id
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .cancelRent(id)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                mainProtocol.result(0, null);
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
 }

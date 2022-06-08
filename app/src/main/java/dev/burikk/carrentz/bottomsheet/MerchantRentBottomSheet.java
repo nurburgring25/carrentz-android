@@ -13,8 +13,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
+
+import org.apache.commons.lang3.StringUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,10 +28,14 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import dev.burikk.carrentz.R;
 import dev.burikk.carrentz.activity.MerchantRentListActivity;
+import dev.burikk.carrentz.api.merchant.MerchantApi;
 import dev.burikk.carrentz.api.merchant.endpoint.rent.item.MerchantRentItem;
+import dev.burikk.carrentz.enumeration.DocumentStatus;
 import dev.burikk.carrentz.helper.DataTypes;
 import dev.burikk.carrentz.helper.Formats;
 import dev.burikk.carrentz.helper.Keyboards;
+import dev.burikk.carrentz.helper.Views;
+import dev.burikk.carrentz.protocol.MainProtocol;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -33,7 +43,7 @@ import io.reactivex.disposables.Disposable;
  * @since 19/02/2019 22.45
  */
 @SuppressLint("NonConstantResourceId")
-public class MerchantRentBottomSheet extends BottomSheetDialogFragment {
+public class MerchantRentBottomSheet extends BottomSheetDialogFragment implements MainProtocol<Object> {
     @BindView(R.id.linearLayout)
     public LinearLayout linearLayout;
     @BindView(R.id.txvNumber)
@@ -64,6 +74,20 @@ public class MerchantRentBottomSheet extends BottomSheetDialogFragment {
     public TextView txvCostPerDay;
     @BindView(R.id.txvTotal)
     public TextView txvTotal;
+    @BindView(R.id.mcvRentCode)
+    public MaterialCardView mcvRentCode;
+    @BindView(R.id.txvRentCode)
+    public TextView txvRentCode;
+    @BindView(R.id.btnGetRentCode)
+    public MaterialButton btnGetRentCode;
+    @BindView(R.id.mcvReturnCode)
+    public MaterialCardView mcvReturnCode;
+    @BindView(R.id.txvReturnCode)
+    public TextView txvReturnCode;
+    @BindView(R.id.btnGetReturnCode)
+    public MaterialButton btnGetReturnCode;
+    @BindView(R.id.btnCancel)
+    public MaterialButton btnCancel;
 
     public MerchantRentListActivity merchantRentListActivity;
     public MerchantRentItem merchantRentItem;
@@ -136,9 +160,81 @@ public class MerchantRentBottomSheet extends BottomSheetDialogFragment {
         }
     }
 
+    @Override
+    public ProgressBar getProgressBar() {
+        return this.progressBar;
+    }
+
+    @Override
+    public AppCompatActivity getAppCompatActivity() {
+        return this.merchantRentListActivity;
+    }
+
+    @Override
+    public void result(Object request, Object data) {
+        int resultCode = (int) request;
+
+        if (resultCode == 1) {
+            Views.gone(this.btnGetRentCode);
+            Views.visible(this.txvRentCode);
+
+            this.txvRentCode.setText((String) data);
+        } else if (resultCode == 2) {
+            Views.gone(this.btnGetReturnCode);
+            Views.visible(this.txvReturnCode);
+
+            this.txvReturnCode.setText((String) data);
+        } else {
+            BottomSheets.message(
+                    this.merchantRentListActivity,
+                    "Dokumen telah berhasil dibatalkan."
+            );
+
+            this.close();
+        }
+    }
+
     @OnClick(R.id.btnClose)
     public void close() {
         this.dismiss();
+    }
+
+    @OnClick(R.id.btnGetRentCode)
+    public void getRentCode() {
+        this.disposable = MerchantApi.rentGetRentCode(
+                this,
+                this.merchantRentItem.getId()
+        );
+    }
+
+    @OnClick(R.id.btnGetReturnCode)
+    public void getReturnCode() {
+        this.disposable = MerchantApi.rentGetReturnCode(
+                this,
+                this.merchantRentItem.getId()
+        );
+    }
+
+    @OnClick(R.id.btnCancel)
+    public void cancel() {
+        BottomSheets.confirmation(
+                this.merchantRentListActivity,
+                "Apakah anda yakin ingin membatalkan dokumen ini?",
+                "TIDAK",
+                "BATALKAN DOKUMEN INI",
+                new ConfirmationBottomSheet.ConfirmationBottomSheetCallback() {
+                    @Override
+                    public void negative() {}
+
+                    @Override
+                    public void positive() {
+                        MerchantRentBottomSheet.this.disposable = MerchantApi.cancelRent(
+                                MerchantRentBottomSheet.this,
+                                MerchantRentBottomSheet.this.merchantRentItem.getId()
+                        );
+                    }
+                }
+        );
     }
 
     private void extract() {
@@ -164,5 +260,42 @@ public class MerchantRentBottomSheet extends BottomSheetDialogFragment {
         this.txvDuration.setText(Formats.getCurrencyFormat(this.merchantRentItem.getDuration().longValue(), false) + " Hari");
         this.txvCostPerDay.setText(Formats.getCurrencyFormat(this.merchantRentItem.getCostPerDay().longValue()));
         this.txvTotal.setText(Formats.getCurrencyFormat(this.merchantRentItem.getTotal().longValue()));
+
+        Views.gone(
+                this.mcvRentCode,
+                this.mcvReturnCode,
+                this.btnCancel
+        );
+
+        if (StringUtils.equals(this.merchantRentItem.getStatus(), DocumentStatus.OPENED.name())) {
+            Views.visible(
+                    this.mcvRentCode,
+                    this.btnCancel
+            );
+
+            if (StringUtils.isNotBlank(this.merchantRentItem.getRentCode())) {
+                Views.gone(this.btnGetRentCode);
+                Views.visible(this.txvRentCode);
+
+                this.txvRentCode.setText(this.merchantRentItem.getRentCode());
+            } else {
+                Views.gone(this.txvRentCode);
+                Views.visible(this.btnGetRentCode);
+            }
+        }
+
+        if (StringUtils.equals(this.merchantRentItem.getStatus(), DocumentStatus.ONGOING.name())) {
+            Views.visible(this.mcvReturnCode);
+
+            if (StringUtils.isNotBlank(this.merchantRentItem.getReturnCode())) {
+                Views.gone(this.btnGetReturnCode);
+                Views.visible(this.txvReturnCode);
+
+                this.txvReturnCode.setText(this.merchantRentItem.getReturnCode());
+            } else {
+                Views.gone(this.txvReturnCode);
+                Views.visible(this.btnGetReturnCode);
+            }
+        }
     }
 }
