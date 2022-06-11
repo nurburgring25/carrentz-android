@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +63,9 @@ public class UserStoreListAdapter extends RecyclerView.Adapter<UserStoreListAdap
 
                 Glide
                         .with(this.userStoreListActivity)
-                        .load(Constant.URL.BASE + "users/generals/merchant-logo/" + userStoreItem.getMerchantId())
+                        .load(userStoreItem.getImageUrl())
+                        .skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .into(viewHolder.imageView);
             }
         }

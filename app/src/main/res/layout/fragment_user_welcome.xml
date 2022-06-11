@@ -54,41 +54,6 @@
             android:layout_marginBottom="8dp"
             android:text="DAFTAR AKUN BARU" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="atau masuk dengan"
-            android:textAlignment="center"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.Material3.Button.IconButton"
-                android:id="@+id/btnFacebook"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginEnd="16dp"
-                app:backgroundTint="@color/md_theme_primary"
-                app:icon="@drawable/ic_facebook"
-                app:iconTint="@color/md_theme_onPrimary"/>
-
-
-            <com.google.android.material.button.MaterialButton
-                style="@style/Widget.Material3.Button.IconButton"
-                android:id="@+id/btnGoogle"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                app:backgroundTint="@color/md_theme_primary"
-                app:icon="@drawable/ic_google"
-                app:iconTint="@color/md_theme_onPrimary"/>
-
-        </LinearLayout>
-
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

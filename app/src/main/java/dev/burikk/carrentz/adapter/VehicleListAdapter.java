@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +22,7 @@ import butterknife.ButterKnife;
 import dev.burikk.carrentz.R;
 import dev.burikk.carrentz.activity.VehicleFormActivity;
 import dev.burikk.carrentz.activity.VehicleListActivity;
+import dev.burikk.carrentz.api.merchant.endpoint.vehicle.item.VehicleImageItem;
 import dev.burikk.carrentz.api.merchant.endpoint.vehicle.item.VehicleItem;
 import dev.burikk.carrentz.helper.Formats;
 import dev.burikk.carrentz.helper.Generals;
@@ -56,6 +61,17 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
                 viewHolder.txvVehicleType.setText(vehicleItem.getVehicleTypeName());
                 viewHolder.txvStore.setText(vehicleItem.getStoreName());
                 viewHolder.txvPrice.setText(Formats.getCurrencyFormat(vehicleItem.getCostPerDay()));
+
+                for (VehicleImageItem vehicleImageItem : vehicleItem.getImages()) {
+                    if (vehicleImageItem.isThumbnail()) {
+                        Glide
+                                .with(this.vehicleListActivity)
+                                .load(vehicleImageItem.getUrl())
+                                .skipMemoryCache(true)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .into(viewHolder.imageView);
+                    }
+                }
             }
         }
     }
@@ -70,6 +86,8 @@ public class VehicleListAdapter extends RecyclerView.Adapter<VehicleListAdapter.
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @BindView(R.id.imageView)
+        public ImageView imageView;
         @BindView(R.id.txvName)
         public TextView txvName;
         @BindView(R.id.txvVehicleType)

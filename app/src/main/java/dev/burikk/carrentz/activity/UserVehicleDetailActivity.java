@@ -1,6 +1,8 @@
 package dev.burikk.carrentz.activity;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -8,18 +10,24 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.util.Pair;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ViewListener;
 
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 import butterknife.BindView;
@@ -28,6 +36,7 @@ import butterknife.OnClick;
 import dev.burikk.carrentz.R;
 import dev.burikk.carrentz.api.user.UserApi;
 import dev.burikk.carrentz.api.user.endpoint.rent.request.RentRequest;
+import dev.burikk.carrentz.api.user.endpoint.vehicle.item.UserVehicleImageItem;
 import dev.burikk.carrentz.api.user.endpoint.vehicle.item.UserVehicleItem;
 import dev.burikk.carrentz.bottomsheet.BottomSheets;
 import dev.burikk.carrentz.bottomsheet.MessageBottomSheet;
@@ -65,18 +74,11 @@ public class UserVehicleDetailActivity extends AppCompatActivity implements Main
     @BindView(R.id.txvLateReturnFinePerDay)
     public TextView txvLateReturnFinePerDay;
 
-    public static final int[] PROMO_IMAGES = {
-            R.drawable.img_promo_1,
-            R.drawable.img_promo_2,
-            R.drawable.img_promo_3,
-            R.drawable.img_promo_4,
-            R.drawable.img_promo_5
-    };
-
     public Calendar cldFrom;
     public Calendar cldTo;
     public UserVehicleItem userVehicleItem;
     public Disposable disposable;
+    public List<Bitmap> bitmaps;
 
     {
         this.cldFrom = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
@@ -90,6 +92,8 @@ public class UserVehicleDetailActivity extends AppCompatActivity implements Main
         this.cldTo.set(Calendar.MINUTE, 0);
         this.cldTo.set(Calendar.SECOND, 0);
         this.cldTo.set(Calendar.MILLISECOND, 0);
+
+        this.bitmaps = new ArrayList<>();
     }
 
     @Override
@@ -199,7 +203,7 @@ public class UserVehicleDetailActivity extends AppCompatActivity implements Main
 
         ImageView imageView = customView.findViewById(R.id.imageView);
 
-        imageView.setImageResource(PROMO_IMAGES[position]);
+        imageView.setImageBitmap(this.bitmaps.get(position));
 
         return customView;
     }
@@ -224,7 +228,8 @@ public class UserVehicleDetailActivity extends AppCompatActivity implements Main
 
     @SuppressLint("SetTextI18n")
     private void widget() {
-        this.carouselView.setPageCount(PROMO_IMAGES.length);
+        this.bitmaps = new ArrayList<>();
+
         this.carouselView.setViewListener(this);
 
         this.txvStore.setText(this.userVehicleItem.getStoreName());
@@ -234,5 +239,22 @@ public class UserVehicleDetailActivity extends AppCompatActivity implements Main
         this.txvLicensePlate.setText(this.userVehicleItem.getLicenseNumber());
         this.txvCostPerDay.setText(Formats.getCurrencyFormat(this.userVehicleItem.getCostPerDay()));
         this.txvLateReturnFinePerDay.setText(Formats.getCurrencyFormat(this.userVehicleItem.getLateReturnFinePerDay()));
+
+        for (UserVehicleImageItem userVehicleImageItem : this.userVehicleItem.getImages()) {
+            Glide
+                    .with(this)
+                    .asBitmap()
+                    .load(userVehicleImageItem.getUrl())
+                    .into(new CustomTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            UserVehicleDetailActivity.this.bitmaps.add(resource);
+                            UserVehicleDetailActivity.this.carouselView.setPageCount(UserVehicleDetailActivity.this.bitmaps.size());
+                        }
+
+                        @Override
+                        public void onLoadCleared(@Nullable Drawable placeholder) {}
+                    });
+        }
     }
 }

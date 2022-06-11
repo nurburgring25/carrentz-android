@@ -8,6 +8,7 @@ public class StoreItem implements Serializable {
     private String phoneNumber;
     private String address;
     private String city;
+    private String imageUrl;
 
     public Long getId() {
         return id;
@@ -47,5 +48,13 @@ public class StoreItem implements Serializable {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

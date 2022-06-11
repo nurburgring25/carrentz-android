@@ -1,21 +1,41 @@
 package dev.burikk.carrentz.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.i18n.phonenumbers.Phonenumber;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +43,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import dev.burikk.carrentz.BuildConfig;
 import dev.burikk.carrentz.R;
 import dev.burikk.carrentz.adapter.SpinnerAdapter;
 import dev.burikk.carrentz.api.merchant.MerchantApi;
@@ -34,11 +55,14 @@ import dev.burikk.carrentz.bottomsheet.SpinnerBottomSheet;
 import dev.burikk.carrentz.common.City;
 import dev.burikk.carrentz.common.DialCode;
 import dev.burikk.carrentz.helper.Generals;
+import dev.burikk.carrentz.helper.Images;
+import dev.burikk.carrentz.helper.Retrofits;
 import dev.burikk.carrentz.helper.Strings;
 import dev.burikk.carrentz.helper.Validators;
 import dev.burikk.carrentz.helper.Views;
 import dev.burikk.carrentz.protocol.MainProtocol;
 import io.reactivex.disposables.Disposable;
+import okhttp3.MultipartBody;
 
 /**
  * @author Muhammad Irfan
@@ -52,6 +76,12 @@ public class StoreFormActivity extends AppCompatActivity implements MainProtocol
     public Toolbar toolbar;
     @BindView(R.id.progressBar)
     public ProgressBar progressBar;
+    @BindView(R.id.imageView)
+    public ImageView imageView;
+    @BindView(R.id.btnTakePhoto)
+    public MaterialButton btnTakePhoto;
+    @BindView(R.id.btnBrowseImage)
+    public MaterialButton btnBrowseImage;
     @BindView(R.id.edtName)
     public TextInputEditText edtName;
     @BindView(R.id.actvDialCode)
@@ -72,6 +102,20 @@ public class StoreFormActivity extends AppCompatActivity implements MainProtocol
     public boolean editable;
     public StoreItem storeItem;
     public Disposable disposable;
+    public Uri uri;
+    public ActivityResultLauncher<Uri> takePictureActivityResultLauncher = this.registerForActivityResult(new ActivityResultContracts.TakePicture(), result -> {
+        if (result) {
+            CropImage.activity(this.uri)
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setAspectRatio(1, 1)
+                    .start(this);
+        }
+    });
+
+    public ActivityResultLauncher<String[]> browseImageActivityResultLauncher = this.registerForActivityResult(new ActivityResultContracts.OpenDocument(), result -> CropImage.activity(result)
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .setAspectRatio(1, 1)
+            .start(this));
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,6 +148,36 @@ public class StoreFormActivity extends AppCompatActivity implements MainProtocol
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult activityResult = CropImage.getActivityResult(data);
+
+            if (activityResult != null) {
+                if (resultCode == RESULT_OK) {
+                    Uri uri = activityResult.getUri();
+
+                    try {
+                        Bitmap bitmap = Images.bitmap(
+                                StoreFormActivity.this,
+                                uri
+                        );
+
+                        StoreFormActivity.this.imageView.setImageBitmap(bitmap);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }  else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                    activityResult.getError().printStackTrace();
+
+                    BottomSheets.message(this, "Gagal mendapatkan gambar, silahkan coba kembali.");
+                }
+            }
+        }
     }
 
     @Override
@@ -163,6 +237,34 @@ public class StoreFormActivity extends AppCompatActivity implements MainProtocol
         } else if (tag == R.id.actvDialCode) {
             this.actvDialCode.setText(selectedItem.getSelectedDescription());
         }
+    }
+
+    @SuppressLint("QueryPermissionsNeeded")
+    @OnClick(R.id.btnTakePhoto)
+    public void takePhoto() {
+        if (this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 666);
+
+                return;
+            }
+
+            File file = new File(this.getFilesDir(), "photo.jpg");
+
+            this.uri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID + ".provider", file);
+
+            this.takePictureActivityResultLauncher.launch(this.uri);
+        } else {
+            BottomSheets.message(
+                    this,
+                    "Kamera tidak ditemukan."
+            );
+        }
+    }
+
+    @OnClick(R.id.btnBrowseImage)
+    public void browseImage() {
+        this.browseImageActivityResultLauncher.launch(new String[]{"image/*"});
     }
 
     @OnClick(R.id.actvDialCode)
@@ -240,17 +342,37 @@ public class StoreFormActivity extends AppCompatActivity implements MainProtocol
 
                         @Override
                         public void positive() {
-                            StoreItem storeItem = new StoreItem();
+                            try {
+                                StoreItem storeItem = new StoreItem();
 
-                            storeItem.setName(Strings.value(StoreFormActivity.this.edtName.getText()));
-                            storeItem.setPhoneNumber(Strings.value(StoreFormActivity.this.actvDialCode.getText()) + Strings.value(StoreFormActivity.this.edtPhoneNumber.getText()));
-                            storeItem.setAddress(Strings.value(StoreFormActivity.this.edtAddress.getText()));
-                            storeItem.setCity(Strings.value(StoreFormActivity.this.actvCity.getText()));
+                                storeItem.setName(Strings.value(StoreFormActivity.this.edtName.getText()));
+                                storeItem.setPhoneNumber(Strings.value(StoreFormActivity.this.actvDialCode.getText()) + Strings.value(StoreFormActivity.this.edtPhoneNumber.getText()));
+                                storeItem.setAddress(Strings.value(StoreFormActivity.this.edtAddress.getText()));
+                                storeItem.setCity(Strings.value(StoreFormActivity.this.actvCity.getText()));
 
-                            if (StoreFormActivity.this.storeItem != null) {
-                                StoreFormActivity.this.disposable = MerchantApi.storePut(StoreFormActivity.this, storeItem, StoreFormActivity.this.storeItem.getId());
-                            } else {
-                                StoreFormActivity.this.disposable = MerchantApi.storePost(StoreFormActivity.this, storeItem);
+                                MultipartBody.Part part = null;
+
+                                StoreFormActivity.this.imageView.invalidate();
+
+                                BitmapDrawable bitmapDrawable = (BitmapDrawable) StoreFormActivity.this.imageView.getDrawable();
+
+                                if (bitmapDrawable != null) {
+                                    Bitmap bitmap = bitmapDrawable.getBitmap();
+
+                                    if (bitmap != null) {
+                                        part = Retrofits.filePart("image", bitmap, Long.toHexString(System.nanoTime()) + ".jpg");
+                                    }
+                                }
+
+                                if (StoreFormActivity.this.storeItem != null) {
+                                    StoreFormActivity.this.disposable = MerchantApi.storePut(StoreFormActivity.this, StoreFormActivity.this.storeItem.getId(), part, storeItem);
+                                } else {
+                                    StoreFormActivity.this.disposable = MerchantApi.storePost(StoreFormActivity.this, part, storeItem);
+                                }
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+
+                                BottomSheets.message(StoreFormActivity.this, "Gagal menyimpan data, silahkan coba kembali beberapa saat kemudian.");
                             }
                         }
                     }
@@ -290,7 +412,9 @@ public class StoreFormActivity extends AppCompatActivity implements MainProtocol
         Views.gone(
                 this.btnDelete,
                 this.btnEdit,
-                this.btnSave
+                this.btnSave,
+                this.btnTakePhoto,
+                this.btnBrowseImage
         );
 
         Views.disable(
@@ -318,13 +442,34 @@ public class StoreFormActivity extends AppCompatActivity implements MainProtocol
 
             this.edtAddress.setText(this.storeItem.getAddress());
             this.actvCity.setText(this.storeItem.getCity());
+
+            Glide
+                    .with(this)
+                    .asBitmap()
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .load(this.storeItem.getImageUrl())
+                    .into(new CustomTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            StoreFormActivity.this.imageView.setImageBitmap(resource);
+                        }
+
+                        @Override
+                        public void onLoadCleared(@Nullable Drawable placeholder) {
+                        }
+                    });
         } else {
             this.editable = true;
             this.actvDialCode.setText("+62");
         }
 
         if (this.editable) {
-            Views.visible(this.btnSave);
+            Views.visible(
+                    this.btnSave,
+                    this.btnTakePhoto,
+                    this.btnBrowseImage
+            );
 
             Views.enable(
                     this.edtName,

@@ -4,6 +4,8 @@ import android.util.Log;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
+
 import dev.burikk.carrentz.api.RestManager;
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.RegisterRequest;
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.SignInRequest;
@@ -21,6 +23,7 @@ import dev.burikk.carrentz.protocol.MainProtocol;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.MultipartBody;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
@@ -182,12 +185,13 @@ public class MerchantApi {
 
     public static Disposable storePost(
             MainProtocol<Void> mainProtocol,
+            MultipartBody.Part part,
             StoreItem storeItem
     ) {
         return RestManager
                 .GET_RETROFIT()
                 .create(MerchantParser.class)
-                .storePost(storeItem)
+                .storePost(part, storeItem)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -206,13 +210,14 @@ public class MerchantApi {
 
     public static Disposable storePut(
             MainProtocol<Void> mainProtocol,
-            StoreItem storeItem,
-            long id
+            long id,
+            MultipartBody.Part part,
+            StoreItem storeItem
     ) {
         return RestManager
                 .GET_RETROFIT()
                 .create(MerchantParser.class)
-                .storePut(storeItem, id)
+                .storePut(id, part, storeItem)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -282,12 +287,13 @@ public class MerchantApi {
 
     public static Disposable vehiclePost(
             MainProtocol<Object> mainProtocol,
+            List<MultipartBody.Part> parts,
             VehicleItem vehicleItem
     ) {
         return RestManager
                 .GET_RETROFIT()
                 .create(MerchantParser.class)
-                .vehiclePost(vehicleItem)
+                .vehiclePost(parts, vehicleItem)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -306,13 +312,14 @@ public class MerchantApi {
 
     public static Disposable vehiclePut(
             MainProtocol<Object> mainProtocol,
-            VehicleItem vehicleItem,
-            long id
+            long id,
+            List<MultipartBody.Part> parts,
+            VehicleItem vehicleItem
     ) {
         return RestManager
                 .GET_RETROFIT()
                 .create(MerchantParser.class)
-                .vehiclePut(vehicleItem, id)
+                .vehiclePut(id, parts, vehicleItem)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

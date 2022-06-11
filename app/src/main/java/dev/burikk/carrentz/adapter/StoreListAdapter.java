@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +59,13 @@ public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.View
                 viewHolder.txvPhoneNumber.setText(storeItem.getPhoneNumber());
                 viewHolder.txvCity.setText(storeItem.getCity());
                 viewHolder.txvAddress.setText(storeItem.getAddress());
+
+                Glide
+                        .with(this.storeListActivity)
+                        .load(storeItem.getImageUrl())
+                        .skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .into(viewHolder.imageView);
             }
         }
     }
@@ -69,6 +80,8 @@ public class StoreListAdapter extends RecyclerView.Adapter<StoreListAdapter.View
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @BindView(R.id.imageView)
+        public ImageView imageView;
         @BindView(R.id.txvName)
         public TextView txvName;
         @BindView(R.id.txvPhoneNumber)

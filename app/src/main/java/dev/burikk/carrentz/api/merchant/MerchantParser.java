@@ -1,5 +1,7 @@
 package dev.burikk.carrentz.api.merchant;
 
+import java.util.List;
+
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.RegisterRequest;
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.SignInRequest;
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.VerificationRequest;
@@ -11,12 +13,15 @@ import dev.burikk.carrentz.api.merchant.endpoint.vehicle.item.VehicleItem;
 import dev.burikk.carrentz.api.merchant.endpoint.vehicle.response.VehicleListResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.vehicle.response.VehicleResourceResponse;
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 /**
@@ -36,11 +41,20 @@ public interface MerchantParser {
     @GET("merchants/stores")
     Observable<Response<StoreListResponse>> storeGet();
 
+    @Multipart
     @POST("merchants/stores")
-    Observable<Response<Void>> storePost(@Body StoreItem storeItem);
+    Observable<Response<Void>> storePost(
+            @Part MultipartBody.Part part,
+            @Part("data") StoreItem storeItem
+    );
 
+    @Multipart
     @PUT("merchants/stores/{id}")
-    Observable<Response<Void>> storePut(@Body StoreItem storeItem, @Path("id") long id);
+    Observable<Response<Void>> storePut(
+            @Path("id") long id,
+            @Part MultipartBody.Part part,
+            @Part("data") StoreItem storeItem
+    );
 
     @DELETE("merchants/stores/{id}")
     Observable<Response<Void>> storeDelete(@Path("id") long id);
@@ -48,11 +62,20 @@ public interface MerchantParser {
     @GET("merchants/vehicles")
     Observable<Response<VehicleListResponse>> vehicleGet();
 
+    @Multipart
     @POST("merchants/vehicles")
-    Observable<Response<Void>> vehiclePost(@Body VehicleItem vehicleItem);
+    Observable<Response<Void>> vehiclePost(
+            @Part List<MultipartBody.Part> parts,
+            @Part("data") VehicleItem vehicleItem
+    );
 
+    @Multipart
     @PUT("merchants/vehicles/{id}")
-    Observable<Response<Void>> vehiclePut(@Body VehicleItem vehicleItem, @Path("id") long id);
+    Observable<Response<Void>> vehiclePut(
+            @Path("id") long id,
+            @Part List<MultipartBody.Part> parts,
+            @Part("data") VehicleItem vehicleItem
+    );
 
     @DELETE("merchants/vehicles/{id}")
     Observable<Response<Void>> vehicleDelete(@Path("id") long id);

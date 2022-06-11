@@ -41,11 +41,13 @@
 
                     <com.synnapps.carouselview.CarouselView
                         android:id="@+id/carouselView"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_width="350dp"
+                        android:layout_height="350dp"
+                        android:layout_gravity="center_horizontal"
                         app:fillColor="@color/md_theme_primary"
                         app:radius="4dp"
-                        app:slideInterval="3000"
+                        app:slideInterval="0"
+                        app:autoPlay="false"
                         app:strokeColor="@color/md_theme_primary"
                         app:strokeWidth="0dp" />
 

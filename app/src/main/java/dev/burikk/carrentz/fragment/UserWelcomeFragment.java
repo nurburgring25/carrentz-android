@@ -102,14 +102,4 @@ public class UserWelcomeFragment extends Fragment implements MainProtocol<SignIn
     public void register() {
         Generals.move(this.welcomeActivity, UserRegisterActivity.class, false);
     }
-
-    @OnClick(R.id.btnFacebook)
-    public void facebook() {
-
-    }
-
-    @OnClick(R.id.btnGoogle)
-    public void google() {
-
-    }
 }

@@ -1,6 +1,8 @@
 package dev.burikk.carrentz.api.user.endpoint.vehicle.item;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserVehicleItem implements Serializable {
     private Long id;
@@ -13,6 +15,11 @@ public class UserVehicleItem implements Serializable {
     private String description;
     private long costPerDay;
     private long lateReturnFinePerDay;
+    private List<UserVehicleImageItem> images;
+
+    {
+        this.images = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;
@@ -92,5 +99,13 @@ public class UserVehicleItem implements Serializable {
 
     public void setLateReturnFinePerDay(long lateReturnFinePerDay) {
         this.lateReturnFinePerDay = lateReturnFinePerDay;
+    }
+
+    public List<UserVehicleImageItem> getImages() {
+        return images;
+    }
+
+    public void setImages(List<UserVehicleImageItem> images) {
+        this.images = images;
     }
 }

@@ -11,6 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,7 @@ import butterknife.ButterKnife;
 import dev.burikk.carrentz.R;
 import dev.burikk.carrentz.activity.UserVehicleDetailActivity;
 import dev.burikk.carrentz.activity.UserVehicleListActivity;
+import dev.burikk.carrentz.api.user.endpoint.vehicle.item.UserVehicleImageItem;
 import dev.burikk.carrentz.api.user.endpoint.vehicle.item.UserVehicleItem;
 import dev.burikk.carrentz.helper.Formats;
 import dev.burikk.carrentz.helper.Generals;
@@ -57,6 +61,17 @@ public class UserVehicleListAdapter extends RecyclerView.Adapter<UserVehicleList
                 viewHolder.txvVehicleType.setText(userVehicleItem.getVehicleTypeName());
                 viewHolder.txvStore.setText(userVehicleItem.getStoreName());
                 viewHolder.txvPrice.setText(Formats.getCurrencyFormat(userVehicleItem.getCostPerDay()));
+
+                for (UserVehicleImageItem userVehicleImageItem : userVehicleItem.getImages()) {
+                    if (userVehicleImageItem.isThumbnail()) {
+                        Glide
+                                .with(this.userVehicleListActivity)
+                                .load(userVehicleImageItem.getUrl())
+                                .skipMemoryCache(true)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .into(viewHolder.imageView);
+                    }
+                }
             }
         }
     }
