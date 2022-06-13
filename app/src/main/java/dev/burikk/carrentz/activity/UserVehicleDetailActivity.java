@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,12 +21,18 @@ import androidx.core.util.Pair;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.CompositeDateValidator;
+import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ViewListener;
 
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -79,6 +86,7 @@ public class UserVehicleDetailActivity extends AppCompatActivity implements Main
     public UserVehicleItem userVehicleItem;
     public Disposable disposable;
     public List<Bitmap> bitmaps;
+    public MaterialDatePicker<Pair<Long, Long>> materialDatePicker;
 
     {
         this.cldFrom = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
@@ -161,11 +169,66 @@ public class UserVehicleDetailActivity extends AppCompatActivity implements Main
     public void rentThisCar() {
         MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
 
-        builder.setSelection(new Pair<>(this.cldFrom.getTimeInMillis(), this.cldTo.getTimeInMillis()));
+        builder.setCalendarConstraints(
+                new CalendarConstraints.Builder()
+                        .setValidator(
+                                CompositeDateValidator.allOf(
+                                        Arrays.asList(
+                                                DateValidatorPointForward.now(),
+                                                new CalendarConstraints.DateValidator() {
+                                                    @Override
+                                                    public boolean isValid(long date) {
+                                                        LocalDate localDate = Instant.ofEpochMilli(date).atZone(ZoneId.systemDefault()).toLocalDate();
 
-        MaterialDatePicker<Pair<Long, Long>> materialDatePicker = builder.build();
+                                                        for (LocalDate bookedDate : UserVehicleDetailActivity.this.userVehicleItem.getBookedDates()) {
+                                                            if (bookedDate.compareTo(localDate) == 0) {
+                                                                return false;
+                                                            }
+                                                        }
 
-        materialDatePicker.addOnPositiveButtonClickListener(selection -> {
+                                                        if (UserVehicleDetailActivity.this.materialDatePicker != null) {
+                                                            Pair<Long, Long> selection = UserVehicleDetailActivity.this.materialDatePicker.getSelection();
+
+                                                            if (selection != null) {
+                                                                if (selection.first != null) {
+                                                                    LocalDate firstSelection = Instant.ofEpochMilli(selection.first).atZone(ZoneId.systemDefault()).toLocalDate();
+                                                                    LocalDate maxAvailable = null;
+
+                                                                    for (LocalDate bookedDate : UserVehicleDetailActivity.this.userVehicleItem.getBookedDates()) {
+                                                                        if (bookedDate.compareTo(firstSelection) > 0) {
+                                                                            maxAvailable = bookedDate.minusDays(1);
+
+                                                                            break;
+                                                                        }
+                                                                    }
+
+                                                                    if (maxAvailable != null) {
+                                                                        return localDate.compareTo(maxAvailable) <= 0;
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+
+                                                        return true;
+                                                    }
+
+                                                    @Override
+                                                    public int describeContents() {
+                                                        return 0;
+                                                    }
+
+                                                    @Override
+                                                    public void writeToParcel(Parcel parcel, int i) {
+                                                    }
+                                                }
+                                        )
+                                )
+                        )
+                        .build()
+        );
+
+        this.materialDatePicker = builder.build();
+        this.materialDatePicker.addOnPositiveButtonClickListener(selection -> {
             if (selection != null) {
                 if (selection.first != null) {
                     UserVehicleDetailActivity.this.cldFrom.setTimeInMillis(selection.first);
@@ -193,7 +256,7 @@ public class UserVehicleDetailActivity extends AppCompatActivity implements Main
             }
         });
 
-        materialDatePicker.show(this.getSupportFragmentManager(), MaterialDatePicker.class.getSimpleName());
+        this.materialDatePicker.show(this.getSupportFragmentManager(), MaterialDatePicker.class.getSimpleName());
     }
 
     @Override
