@@ -11,12 +11,15 @@ import dev.burikk.carrentz.api.merchant.endpoint.account.request.RegisterRequest
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.SignInRequest;
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.VerificationRequest;
 import dev.burikk.carrentz.api.merchant.endpoint.account.response.SignInResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.rent.item.MerchantRentItem;
 import dev.burikk.carrentz.api.merchant.endpoint.rent.response.MerchantRentListResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.store.item.StoreItem;
 import dev.burikk.carrentz.api.merchant.endpoint.store.response.StoreListResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.vehicle.item.VehicleItem;
 import dev.burikk.carrentz.api.merchant.endpoint.vehicle.response.VehicleListResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.vehicle.response.VehicleResourceResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.vehicleavailibility.response.VehicleAvailibilityResourceResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.vehicleavailibility.response.VehicleAvailibilityResponse;
 import dev.burikk.carrentz.helper.Dialogs;
 import dev.burikk.carrentz.helper.Views;
 import dev.burikk.carrentz.protocol.MainProtocol;
@@ -488,6 +491,93 @@ public class MerchantApi {
                         response -> {
                             if (response.isSuccessful()) {
                                 mainProtocol.result(0, null);
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable vehicleAvailibilities(
+            MainProtocol<Object> mainProtocol,
+            long vehicleId
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .vehicleAvailibilities(vehicleId)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                VehicleAvailibilityResponse vehicleAvailibilityResponse = response.body();
+
+                                if (vehicleAvailibilityResponse != null) {
+                                    mainProtocol.result(vehicleAvailibilityResponse);
+                                } else {
+                                    error(mainProtocol, new Exception());
+                                }
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable vehicleAvailibilityResources(MainProtocol<Object> mainProtocol) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .vehicleAvailibilityResources()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                VehicleAvailibilityResourceResponse vehicleAvailibilityResourceResponse = response.body();
+
+                                if (vehicleAvailibilityResourceResponse != null) {
+                                    mainProtocol.result(vehicleAvailibilityResourceResponse);
+                                } else {
+                                    error(mainProtocol, new Exception());
+                                }
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable rentGet(
+            MainProtocol<Object> mainProtocol,
+            long id
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .rentGet(id)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                MerchantRentItem merchantRentItem = response.body();
+
+                                if (merchantRentItem != null) {
+                                    mainProtocol.result(merchantRentItem);
+                                } else {
+                                    error(mainProtocol, new Exception());
+                                }
                             } else {
                                 error(mainProtocol, new HttpException(response));
                             }

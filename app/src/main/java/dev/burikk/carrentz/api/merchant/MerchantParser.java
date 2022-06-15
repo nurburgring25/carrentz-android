@@ -6,12 +6,15 @@ import dev.burikk.carrentz.api.merchant.endpoint.account.request.RegisterRequest
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.SignInRequest;
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.VerificationRequest;
 import dev.burikk.carrentz.api.merchant.endpoint.account.response.SignInResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.rent.item.MerchantRentItem;
 import dev.burikk.carrentz.api.merchant.endpoint.rent.response.MerchantRentListResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.store.item.StoreItem;
 import dev.burikk.carrentz.api.merchant.endpoint.store.response.StoreListResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.vehicle.item.VehicleItem;
 import dev.burikk.carrentz.api.merchant.endpoint.vehicle.response.VehicleListResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.vehicle.response.VehicleResourceResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.vehicleavailibility.response.VehicleAvailibilityResourceResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.vehicleavailibility.response.VehicleAvailibilityResponse;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import retrofit2.Response;
@@ -23,6 +26,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * @author Muhammad Irfan
@@ -94,4 +98,13 @@ public interface MerchantParser {
 
     @DELETE("merchants/rents/{id}")
     Observable<Response<Void>> cancelRent(@Path("id") Long id);
+
+    @GET("merchants/vehicle-availibilities")
+    Observable<Response<VehicleAvailibilityResponse>> vehicleAvailibilities(@Query("vehicleId") long vehicleId);
+
+    @GET("merchants/vehicle-availibilities/resource")
+    Observable<Response<VehicleAvailibilityResourceResponse>> vehicleAvailibilityResources();
+
+    @GET("merchants/rents/{id}")
+    Observable<Response<MerchantRentItem>> rentGet(@Path("id") Long id);
 }

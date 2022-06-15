@@ -89,7 +89,7 @@ public class MerchantRentBottomSheet extends BottomSheetDialogFragment implement
     @BindView(R.id.btnCancel)
     public MaterialButton btnCancel;
 
-    public MerchantRentListActivity merchantRentListActivity;
+    public AppCompatActivity appCompatActivity;
     public MerchantRentItem merchantRentItem;
     public Unbinder unbinder;
     public Disposable disposable;
@@ -124,7 +124,7 @@ public class MerchantRentBottomSheet extends BottomSheetDialogFragment implement
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
-        this.merchantRentListActivity = (MerchantRentListActivity) context;
+        this.appCompatActivity = (AppCompatActivity) context;
     }
 
     @Nullable
@@ -167,7 +167,7 @@ public class MerchantRentBottomSheet extends BottomSheetDialogFragment implement
 
     @Override
     public AppCompatActivity getAppCompatActivity() {
-        return this.merchantRentListActivity;
+        return this.appCompatActivity;
     }
 
     @Override
@@ -186,7 +186,7 @@ public class MerchantRentBottomSheet extends BottomSheetDialogFragment implement
             this.txvReturnCode.setText((String) data);
         } else {
             BottomSheets.message(
-                    this.merchantRentListActivity,
+                    this.appCompatActivity,
                     "Dokumen telah berhasil dibatalkan."
             );
 
@@ -218,7 +218,7 @@ public class MerchantRentBottomSheet extends BottomSheetDialogFragment implement
     @OnClick(R.id.btnCancel)
     public void cancel() {
         BottomSheets.confirmation(
-                this.merchantRentListActivity,
+                this.appCompatActivity,
                 "Apakah anda yakin ingin membatalkan dokumen ini?",
                 "TIDAK",
                 "BATALKAN DOKUMEN INI",
@@ -245,7 +245,7 @@ public class MerchantRentBottomSheet extends BottomSheetDialogFragment implement
 
     @SuppressLint("SetTextI18n")
     private void init() {
-        new Keyboards(this.merchantRentListActivity, this.linearLayout);
+        new Keyboards(this.appCompatActivity, this.linearLayout);
 
         this.txvNumber.setText(this.merchantRentItem.getNumber());
         this.txvStore.setText(this.merchantRentItem.getStore().getName());
@@ -267,34 +267,36 @@ public class MerchantRentBottomSheet extends BottomSheetDialogFragment implement
                 this.btnCancel
         );
 
-        if (StringUtils.equals(this.merchantRentItem.getStatus(), DocumentStatus.OPENED.name())) {
-            Views.visible(
-                    this.mcvRentCode,
-                    this.btnCancel
-            );
+        if (this.appCompatActivity instanceof MerchantRentListActivity) {
+            if (StringUtils.equals(this.merchantRentItem.getStatus(), DocumentStatus.OPENED.name())) {
+                Views.visible(
+                        this.mcvRentCode,
+                        this.btnCancel
+                );
 
-            if (StringUtils.isNotBlank(this.merchantRentItem.getRentCode())) {
-                Views.gone(this.btnGetRentCode);
-                Views.visible(this.txvRentCode);
+                if (StringUtils.isNotBlank(this.merchantRentItem.getRentCode())) {
+                    Views.gone(this.btnGetRentCode);
+                    Views.visible(this.txvRentCode);
 
-                this.txvRentCode.setText(this.merchantRentItem.getRentCode());
-            } else {
-                Views.gone(this.txvRentCode);
-                Views.visible(this.btnGetRentCode);
+                    this.txvRentCode.setText(this.merchantRentItem.getRentCode());
+                } else {
+                    Views.gone(this.txvRentCode);
+                    Views.visible(this.btnGetRentCode);
+                }
             }
-        }
 
-        if (StringUtils.equals(this.merchantRentItem.getStatus(), DocumentStatus.ONGOING.name())) {
-            Views.visible(this.mcvReturnCode);
+            if (StringUtils.equals(this.merchantRentItem.getStatus(), DocumentStatus.ONGOING.name())) {
+                Views.visible(this.mcvReturnCode);
 
-            if (StringUtils.isNotBlank(this.merchantRentItem.getReturnCode())) {
-                Views.gone(this.btnGetReturnCode);
-                Views.visible(this.txvReturnCode);
+                if (StringUtils.isNotBlank(this.merchantRentItem.getReturnCode())) {
+                    Views.gone(this.btnGetReturnCode);
+                    Views.visible(this.txvReturnCode);
 
-                this.txvReturnCode.setText(this.merchantRentItem.getReturnCode());
-            } else {
-                Views.gone(this.txvReturnCode);
-                Views.visible(this.btnGetReturnCode);
+                    this.txvReturnCode.setText(this.merchantRentItem.getReturnCode());
+                } else {
+                    Views.gone(this.txvReturnCode);
+                    Views.visible(this.btnGetReturnCode);
+                }
             }
         }
     }
