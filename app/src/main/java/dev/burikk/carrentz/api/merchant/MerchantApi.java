@@ -11,6 +11,7 @@ import dev.burikk.carrentz.api.merchant.endpoint.account.request.RegisterRequest
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.SignInRequest;
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.VerificationRequest;
 import dev.burikk.carrentz.api.merchant.endpoint.account.response.SignInResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.dashboard.response.DashboardResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.rent.item.MerchantRentItem;
 import dev.burikk.carrentz.api.merchant.endpoint.rent.response.MerchantRentListResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.store.item.StoreItem;
@@ -551,6 +552,33 @@ public class MerchantApi {
 
                                 if (merchantRentItem != null) {
                                     mainProtocol.result(merchantRentItem);
+                                } else {
+                                    error(mainProtocol, new Exception());
+                                }
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable dashboard(MainProtocol<DashboardResponse> mainProtocol) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .dashboard()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                DashboardResponse dashboardResponse = response.body();
+
+                                if (dashboardResponse != null) {
+                                    mainProtocol.result(dashboardResponse);
                                 } else {
                                     error(mainProtocol, new Exception());
                                 }
