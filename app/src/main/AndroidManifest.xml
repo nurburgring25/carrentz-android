@@ -194,6 +194,78 @@
         </activity>
 
         <activity
+            android:name=".activity.MerchantRentByVehicleActivity"
+            android:label="Rental Berdasarkan Kendaraan"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:exported="false"
+            tools:ignore="LockedOrientationActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MerchantHomeActivity" />
+
+        </activity>
+
+        <activity
+            android:name=".activity.MerchantRentByVehicleTypeActivity"
+            android:label="Rental Berdasarkan Jenis Kendaraan"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:exported="false"
+            tools:ignore="LockedOrientationActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MerchantHomeActivity" />
+
+        </activity>
+
+        <activity
+            android:name=".activity.MerchantRentByStoreActivity"
+            android:label="Rental Berdasarkan Cabang"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:exported="false"
+            tools:ignore="LockedOrientationActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MerchantHomeActivity" />
+
+        </activity>
+
+        <activity
+            android:name=".activity.MerchantRentByCustomerActivity"
+            android:label="Rental Berdasarkan Pelanggan"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:exported="false"
+            tools:ignore="LockedOrientationActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activity.MerchantHomeActivity" />
+
+        </activity>
+
+        <activity
             android:name=".activity.UserRegisterActivity"
             android:label="Daftar Pengguna Baru"
             android:screenOrientation="portrait"

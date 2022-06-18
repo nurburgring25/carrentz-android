@@ -9,6 +9,10 @@ import dev.burikk.carrentz.api.merchant.endpoint.account.response.SignInResponse
 import dev.burikk.carrentz.api.merchant.endpoint.dashboard.response.DashboardResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.rent.item.MerchantRentItem;
 import dev.burikk.carrentz.api.merchant.endpoint.rent.response.MerchantRentListResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.report.response.RentByCustomerResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.report.response.RentByStoreResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.report.response.RentByVehicleResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.report.response.RentByVehicleTypeResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.store.item.StoreItem;
 import dev.burikk.carrentz.api.merchant.endpoint.store.response.StoreListResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.vehicle.item.VehicleItem;
@@ -108,4 +112,16 @@ public interface MerchantParser {
 
     @GET("merchants/dashboard")
     Observable<Response<DashboardResponse>> dashboard();
+
+    @GET("merchants/reports/rent-by-vehicles")
+    Observable<Response<RentByVehicleResponse>> rentByVehicles(@Query("start") long start, @Query("until") long until);
+
+    @GET("merchants/reports/rent-by-vehicle-types")
+    Observable<Response<RentByVehicleTypeResponse>> rentByVehicleTypes(@Query("start") long start, @Query("until") long until);
+
+    @GET("merchants/reports/rent-by-stores")
+    Observable<Response<RentByStoreResponse>> rentByStores(@Query("start") long start, @Query("until") long until);
+
+    @GET("merchants/reports/rent-by-customers")
+    Observable<Response<RentByCustomerResponse>> rentByCustomers(@Query("start") long start, @Query("until") long until);
 }

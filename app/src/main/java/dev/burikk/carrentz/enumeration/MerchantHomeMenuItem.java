@@ -14,7 +14,11 @@ public enum MerchantHomeMenuItem {
     RENT(R.drawable.ic_assignment, "Rental"),
     ACCOUNT(R.drawable.ic_person, "Akun"),
     RENT_REPORT(R.drawable.ic_bar_chart, "Laporan Rental"),
-    VEHICLE_AVAILABILITY(R.drawable.ic_departure_board, "Ketersediaan Mobil");
+    VEHICLE_AVAILABILITY(R.drawable.ic_departure_board, "Ketersediaan Mobil"),
+    RENT_BY_VEHICLE(R.drawable.ic_bar_chart, "Rental per Kendaraan"),
+    RENT_BY_VEHICLE_TYPE(R.drawable.ic_bar_chart, "Rental per Jenis Kendaraan"),
+    RENT_BY_STORE(R.drawable.ic_bar_chart, "Rental per Cabang"),
+    RENT_BY_CUSTOMER(R.drawable.ic_bar_chart, "Rental per Pelanggan");
 
     private int icon;
     private String text;

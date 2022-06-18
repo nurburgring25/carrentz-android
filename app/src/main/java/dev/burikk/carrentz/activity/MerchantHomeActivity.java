@@ -101,6 +101,14 @@ public class MerchantHomeActivity extends AppCompatActivity implements MerchantH
             Generals.move(this, MerchantAccountActivity.class, false);
         } else if (merchantHomeMenuItem == MerchantHomeMenuItem.VEHICLE_AVAILABILITY) {
             Generals.move(this, MerchantVehicleAvailabilityActivity.class, false);
+        } else if (merchantHomeMenuItem == MerchantHomeMenuItem.RENT_BY_VEHICLE) {
+            Generals.move(this, MerchantRentByVehicleActivity.class, false);
+        } else if (merchantHomeMenuItem == MerchantHomeMenuItem.RENT_BY_VEHICLE_TYPE) {
+            Generals.move(this, MerchantRentByVehicleTypeActivity.class, false);
+        } else if (merchantHomeMenuItem == MerchantHomeMenuItem.RENT_BY_STORE) {
+            Generals.move(this, MerchantRentByStoreActivity.class, false);
+        } else if (merchantHomeMenuItem == MerchantHomeMenuItem.RENT_BY_CUSTOMER) {
+            Generals.move(this, MerchantRentByCustomerActivity.class, false);
         }
     }
 

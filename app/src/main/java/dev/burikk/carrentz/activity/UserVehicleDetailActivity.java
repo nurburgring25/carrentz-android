@@ -76,7 +76,7 @@ public class UserVehicleDetailActivity extends AppCompatActivity implements View
     public TextView txvLateReturnFinePerDay;
 
     public Calendar cldFrom;
-    public Calendar cldTo;
+    public Calendar cldUntil;
     public UserVehicleItem userVehicleItem;
     public List<Bitmap> bitmaps;
     public MaterialDatePicker<Pair<Long, Long>> materialDatePicker;
@@ -88,11 +88,11 @@ public class UserVehicleDetailActivity extends AppCompatActivity implements View
         this.cldFrom.set(Calendar.SECOND, 0);
         this.cldFrom.set(Calendar.MILLISECOND, 0);
 
-        this.cldTo = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-        this.cldTo.set(Calendar.HOUR, 0);
-        this.cldTo.set(Calendar.MINUTE, 0);
-        this.cldTo.set(Calendar.SECOND, 0);
-        this.cldTo.set(Calendar.MILLISECOND, 0);
+        this.cldUntil = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        this.cldUntil.set(Calendar.HOUR, 0);
+        this.cldUntil.set(Calendar.MINUTE, 0);
+        this.cldUntil.set(Calendar.SECOND, 0);
+        this.cldUntil.set(Calendar.MILLISECOND, 0);
 
         this.bitmaps = new ArrayList<>();
     }
@@ -195,18 +195,18 @@ public class UserVehicleDetailActivity extends AppCompatActivity implements View
                 }
 
                 if (selection.second != null) {
-                    UserVehicleDetailActivity.this.cldTo.setTimeInMillis(selection.second);
-                    UserVehicleDetailActivity.this.cldTo.set(Calendar.HOUR, 0);
-                    UserVehicleDetailActivity.this.cldTo.set(Calendar.MINUTE, 0);
-                    UserVehicleDetailActivity.this.cldTo.set(Calendar.SECOND, 0);
-                    UserVehicleDetailActivity.this.cldTo.set(Calendar.MILLISECOND, 0);
+                    UserVehicleDetailActivity.this.cldUntil.setTimeInMillis(selection.second);
+                    UserVehicleDetailActivity.this.cldUntil.set(Calendar.HOUR, 0);
+                    UserVehicleDetailActivity.this.cldUntil.set(Calendar.MINUTE, 0);
+                    UserVehicleDetailActivity.this.cldUntil.set(Calendar.SECOND, 0);
+                    UserVehicleDetailActivity.this.cldUntil.set(Calendar.MILLISECOND, 0);
                 }
 
                 BottomSheets.userRentConfirmation(
                         this,
                         this.userVehicleItem,
                         UserVehicleDetailActivity.this.cldFrom.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
-                        UserVehicleDetailActivity.this.cldTo.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+                        UserVehicleDetailActivity.this.cldUntil.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
                 );
             }
         });

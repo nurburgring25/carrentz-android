@@ -14,6 +14,10 @@ import dev.burikk.carrentz.api.merchant.endpoint.account.response.SignInResponse
 import dev.burikk.carrentz.api.merchant.endpoint.dashboard.response.DashboardResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.rent.item.MerchantRentItem;
 import dev.burikk.carrentz.api.merchant.endpoint.rent.response.MerchantRentListResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.report.response.RentByCustomerResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.report.response.RentByStoreResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.report.response.RentByVehicleResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.report.response.RentByVehicleTypeResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.store.item.StoreItem;
 import dev.burikk.carrentz.api.merchant.endpoint.store.response.StoreListResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.vehicle.item.VehicleItem;
@@ -579,6 +583,130 @@ public class MerchantApi {
 
                                 if (dashboardResponse != null) {
                                     mainProtocol.result(dashboardResponse);
+                                } else {
+                                    error(mainProtocol, new Exception());
+                                }
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable rentByVehicles(
+            MainProtocol<RentByVehicleResponse> mainProtocol,
+            long start,
+            long until
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .rentByVehicles(start, until)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                RentByVehicleResponse rentByVehicleResponse = response.body();
+
+                                if (rentByVehicleResponse != null) {
+                                    mainProtocol.result(rentByVehicleResponse);
+                                } else {
+                                    error(mainProtocol, new Exception());
+                                }
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable rentByVehicleTypes(
+            MainProtocol<RentByVehicleTypeResponse> mainProtocol,
+            long start,
+            long until
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .rentByVehicleTypes(start, until)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                RentByVehicleTypeResponse rentByVehicleTypeResponse = response.body();
+
+                                if (rentByVehicleTypeResponse != null) {
+                                    mainProtocol.result(rentByVehicleTypeResponse);
+                                } else {
+                                    error(mainProtocol, new Exception());
+                                }
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable rentByStores(
+            MainProtocol<RentByStoreResponse> mainProtocol,
+            long start,
+            long until
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .rentByStores(start, until)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                RentByStoreResponse rentByStoreResponse = response.body();
+
+                                if (rentByStoreResponse != null) {
+                                    mainProtocol.result(rentByStoreResponse);
+                                } else {
+                                    error(mainProtocol, new Exception());
+                                }
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable rentByCustomers(
+            MainProtocol<RentByCustomerResponse> mainProtocol,
+            long start,
+            long until
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .rentByCustomers(start, until)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                RentByCustomerResponse rentByCustomerResponse = response.body();
+
+                                if (rentByCustomerResponse != null) {
+                                    mainProtocol.result(rentByCustomerResponse);
                                 } else {
                                     error(mainProtocol, new Exception());
                                 }
