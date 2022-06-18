@@ -14,6 +14,7 @@ import dev.burikk.carrentz.api.merchant.endpoint.account.response.SignInResponse
 import dev.burikk.carrentz.api.merchant.endpoint.dashboard.response.DashboardResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.rent.item.MerchantRentItem;
 import dev.burikk.carrentz.api.merchant.endpoint.rent.response.MerchantRentListResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.report.response.DailyRentResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.report.response.RentByCustomerResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.report.response.RentByStoreResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.report.response.RentByVehicleResponse;
@@ -583,6 +584,37 @@ public class MerchantApi {
 
                                 if (dashboardResponse != null) {
                                     mainProtocol.result(dashboardResponse);
+                                } else {
+                                    error(mainProtocol, new Exception());
+                                }
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable dailyRents(
+            MainProtocol<DailyRentResponse> mainProtocol,
+            long start,
+            long until
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .dailyRents(start, until)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                DailyRentResponse dailyRentResponse = response.body();
+
+                                if (dailyRentResponse != null) {
+                                    mainProtocol.result(dailyRentResponse);
                                 } else {
                                     error(mainProtocol, new Exception());
                                 }

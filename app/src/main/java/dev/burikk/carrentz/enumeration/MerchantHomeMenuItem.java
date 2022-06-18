@@ -13,7 +13,7 @@ public enum MerchantHomeMenuItem {
     VEHICLE(R.drawable.ic_directions_car, "Mobil"),
     RENT(R.drawable.ic_assignment, "Rental"),
     ACCOUNT(R.drawable.ic_person, "Akun"),
-    RENT_REPORT(R.drawable.ic_bar_chart, "Laporan Rental"),
+    DAILY_RENT(R.drawable.ic_bar_chart, "Rental per Hari"),
     VEHICLE_AVAILABILITY(R.drawable.ic_departure_board, "Ketersediaan Mobil"),
     RENT_BY_VEHICLE(R.drawable.ic_bar_chart, "Rental per Kendaraan"),
     RENT_BY_VEHICLE_TYPE(R.drawable.ic_bar_chart, "Rental per Jenis Kendaraan"),

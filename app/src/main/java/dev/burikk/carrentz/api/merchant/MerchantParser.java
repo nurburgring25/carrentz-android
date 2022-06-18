@@ -9,6 +9,7 @@ import dev.burikk.carrentz.api.merchant.endpoint.account.response.SignInResponse
 import dev.burikk.carrentz.api.merchant.endpoint.dashboard.response.DashboardResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.rent.item.MerchantRentItem;
 import dev.burikk.carrentz.api.merchant.endpoint.rent.response.MerchantRentListResponse;
+import dev.burikk.carrentz.api.merchant.endpoint.report.response.DailyRentResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.report.response.RentByCustomerResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.report.response.RentByStoreResponse;
 import dev.burikk.carrentz.api.merchant.endpoint.report.response.RentByVehicleResponse;
@@ -112,6 +113,9 @@ public interface MerchantParser {
 
     @GET("merchants/dashboard")
     Observable<Response<DashboardResponse>> dashboard();
+
+    @GET("merchants/reports/daily-rents")
+    Observable<Response<DailyRentResponse>> dailyRents(@Query("start") long start, @Query("until") long until);
 
     @GET("merchants/reports/rent-by-vehicles")
     Observable<Response<RentByVehicleResponse>> rentByVehicles(@Query("start") long start, @Query("until") long until);
