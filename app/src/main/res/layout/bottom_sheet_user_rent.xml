@@ -392,6 +392,15 @@
 
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.Material3.Button.UnelevatedButton"
+            android:id="@+id/btnCancel"
+            android:layout_marginTop="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="BATALKAN DOKUMEN" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.Material3.Button.UnelevatedButton"
             android:id="@+id/btnTakeTheCar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

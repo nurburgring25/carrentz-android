@@ -477,30 +477,6 @@ public class MerchantApi {
                 );
     }
 
-    public static Disposable cancelRent(
-            MainProtocol<Object> mainProtocol,
-            Long id
-    ) {
-        return RestManager
-                .GET_RETROFIT()
-                .create(MerchantParser.class)
-                .cancelRent(id)
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        response -> {
-                            if (response.isSuccessful()) {
-                                mainProtocol.result(0, null);
-                            } else {
-                                error(mainProtocol, new HttpException(response));
-                            }
-                        },
-                        throwable -> error(mainProtocol, throwable),
-                        () -> finish(mainProtocol),
-                        disposable -> process(mainProtocol)
-                );
-    }
-
     public static Disposable vehicleAvailibilities(
             MainProtocol<Object> mainProtocol,
             long vehicleId

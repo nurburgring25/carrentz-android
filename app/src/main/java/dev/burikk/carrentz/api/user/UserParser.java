@@ -12,6 +12,7 @@ import dev.burikk.carrentz.api.user.endpoint.vehicle.response.UserVehicleListRes
 import io.reactivex.Observable;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -45,6 +46,9 @@ public interface UserParser {
 
     @GET("users/rents")
     Observable<Response<UserRentListResponse>> rentGet();
+
+    @DELETE("users/rents/{id}")
+    Observable<Response<Void>> cancelRent(@Path("id") Long id);
 
     @GET("users/rents/{id}/take-the-car")
     Observable<Response<Void>> rentTakeTheCar(@Path("id") Long id, @Query("code") String code);

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -26,6 +27,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import dev.burikk.carrentz.R;
 import dev.burikk.carrentz.activity.UserHomeActivity;
+import dev.burikk.carrentz.api.user.UserApi;
 import dev.burikk.carrentz.api.user.endpoint.rent.item.UserRentItem;
 import dev.burikk.carrentz.dialog.Dialogs;
 import dev.burikk.carrentz.enumeration.DocumentStatus;
@@ -33,6 +35,7 @@ import dev.burikk.carrentz.helper.DataTypes;
 import dev.burikk.carrentz.helper.Formats;
 import dev.burikk.carrentz.helper.Keyboards;
 import dev.burikk.carrentz.helper.Views;
+import dev.burikk.carrentz.protocol.MainProtocol;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -40,7 +43,7 @@ import io.reactivex.disposables.Disposable;
  * @since 19/02/2019 22.45
  */
 @SuppressLint("NonConstantResourceId")
-public class UserRentBottomSheet extends BottomSheetDialogFragment {
+public class UserRentBottomSheet extends BottomSheetDialogFragment implements MainProtocol<Object> {
     @BindView(R.id.linearLayout)
     public LinearLayout linearLayout;
     @BindView(R.id.txvNumber)
@@ -71,6 +74,8 @@ public class UserRentBottomSheet extends BottomSheetDialogFragment {
     public TextView txvCostPerDay;
     @BindView(R.id.txvTotal)
     public TextView txvTotal;
+    @BindView(R.id.btnCancel)
+    public MaterialButton btnCancel;
     @BindView(R.id.btnTakeTheCar)
     public MaterialButton btnTakeTheCar;
     @BindView(R.id.btnReturnTheCar)
@@ -147,6 +152,26 @@ public class UserRentBottomSheet extends BottomSheetDialogFragment {
         }
     }
 
+    @Override
+    public ProgressBar getProgressBar() {
+        return this.progressBar;
+    }
+
+    @Override
+    public AppCompatActivity getAppCompatActivity() {
+        return this.userHomeActivity;
+    }
+
+    @Override
+    public void result(Object data) {
+        BottomSheets.message(
+                this.userHomeActivity,
+                "Dokumen telah berhasil dibatalkan."
+        );
+
+        this.close();
+    }
+
     @OnClick(R.id.btnClose)
     public void close() {
         this.dismiss();
@@ -167,6 +192,29 @@ public class UserRentBottomSheet extends BottomSheetDialogFragment {
                 this.userHomeActivity,
                 this.userRentItem,
                 this::close
+        );
+    }
+
+    @OnClick(R.id.btnCancel)
+    public void cancel() {
+        BottomSheets.confirmation(
+                this.userHomeActivity,
+                "Apakah anda yakin ingin membatalkan dokumen ini?",
+                "Uang muka tidak akan dikembalikan jika dokumen ini dibatalkan.",
+                "TIDAK",
+                "BATALKAN DOKUMEN INI",
+                new ConfirmationBottomSheet.ConfirmationBottomSheetCallback() {
+                    @Override
+                    public void negative() {}
+
+                    @Override
+                    public void positive() {
+                        UserRentBottomSheet.this.disposable = UserApi.cancelRent(
+                                UserRentBottomSheet.this,
+                                UserRentBottomSheet.this.userRentItem.getId()
+                        );
+                    }
+                }
         );
     }
 
@@ -196,11 +244,15 @@ public class UserRentBottomSheet extends BottomSheetDialogFragment {
 
         Views.gone(
                 this.btnTakeTheCar,
-                this.btnReturnTheCar
+                this.btnReturnTheCar,
+                this.btnCancel
         );
 
         if (StringUtils.equals(this.userRentItem.getStatus(), DocumentStatus.OPENED.name())) {
-            Views.visible(this.btnTakeTheCar);
+            Views.visible(
+                    this.btnTakeTheCar,
+                    this.btnCancel
+            );
         }
 
         if (StringUtils.equals(this.userRentItem.getStatus(), DocumentStatus.ONGOING.name())) {

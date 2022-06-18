@@ -13,6 +13,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import dev.burikk.carrentz.CarrentzApp;
@@ -258,5 +259,18 @@ public class BottomSheets {
         userRentBottomSheet.show(appCompatActivity.getSupportFragmentManager(), UserRentBottomSheet.class.getSimpleName());
 
         return userRentBottomSheet;
+    }
+
+    public static UserRentConfirmationBottomSheet userRentConfirmation(
+            AppCompatActivity appCompatActivity,
+            UserVehicleItem userVehicleItem,
+            LocalDate start,
+            LocalDate until
+    ) {
+        UserRentConfirmationBottomSheet userRentConfirmationBottomSheet = UserRentConfirmationBottomSheet.newInstance(userVehicleItem, start, until);
+        userRentConfirmationBottomSheet.setCancelable(false);
+        userRentConfirmationBottomSheet.show(appCompatActivity.getSupportFragmentManager(), UserRentConfirmationBottomSheet.class.getSimpleName());
+
+        return userRentConfirmationBottomSheet;
     }
 }

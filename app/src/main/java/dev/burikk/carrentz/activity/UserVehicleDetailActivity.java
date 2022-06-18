@@ -41,23 +41,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dev.burikk.carrentz.R;
-import dev.burikk.carrentz.api.user.UserApi;
-import dev.burikk.carrentz.api.user.endpoint.rent.request.RentRequest;
 import dev.burikk.carrentz.api.user.endpoint.vehicle.item.UserVehicleImageItem;
 import dev.burikk.carrentz.api.user.endpoint.vehicle.item.UserVehicleItem;
 import dev.burikk.carrentz.bottomsheet.BottomSheets;
-import dev.burikk.carrentz.bottomsheet.MessageBottomSheet;
 import dev.burikk.carrentz.helper.Formats;
-import dev.burikk.carrentz.helper.Generals;
-import dev.burikk.carrentz.protocol.MainProtocol;
-import io.reactivex.disposables.Disposable;
 
 /**
  * @author Muhammad Irfan
  * @since 18/01/2022 11.05
  */
 @SuppressLint("NonConstantResourceId")
-public class UserVehicleDetailActivity extends AppCompatActivity implements MainProtocol<Object>, ViewListener {
+public class UserVehicleDetailActivity extends AppCompatActivity implements ViewListener {
     @BindView(R.id.coordinatorLayout)
     public CoordinatorLayout coordinatorLayout;
     @BindView(R.id.toolbar)
@@ -84,7 +78,6 @@ public class UserVehicleDetailActivity extends AppCompatActivity implements Main
     public Calendar cldFrom;
     public Calendar cldTo;
     public UserVehicleItem userVehicleItem;
-    public Disposable disposable;
     public List<Bitmap> bitmaps;
     public MaterialDatePicker<Pair<Long, Long>> materialDatePicker;
 
@@ -116,15 +109,6 @@ public class UserVehicleDetailActivity extends AppCompatActivity implements Main
         this.widget();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        if (this.disposable != null) {
-            this.disposable.dispose();
-        }
-    }
-
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
@@ -135,34 +119,6 @@ public class UserVehicleDetailActivity extends AppCompatActivity implements Main
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public ProgressBar getProgressBar() {
-        return this.progressBar;
-    }
-
-    @Override
-    public AppCompatActivity getAppCompatActivity() {
-        return this;
-    }
-
-    @Override
-    public void result(Object data) {
-        BottomSheets.message(
-                this,
-                "Mobil berhasil disewa.",
-                new MessageBottomSheet.MessageBottomSheetCallback() {
-                    @Override
-                    public void dismiss() {
-                        Generals.move(UserVehicleDetailActivity.this, UserHomeActivity.class, true);
-                    }
-
-                    @Override
-                    public void cancel() {
-                        Generals.move(UserVehicleDetailActivity.this, UserHomeActivity.class, true);
-                    }
-                });
     }
 
     @OnClick(R.id.btnRentThisCar)
@@ -246,13 +202,12 @@ public class UserVehicleDetailActivity extends AppCompatActivity implements Main
                     UserVehicleDetailActivity.this.cldTo.set(Calendar.MILLISECOND, 0);
                 }
 
-                RentRequest rentRequest = new RentRequest();
-
-                rentRequest.setVehicleId(UserVehicleDetailActivity.this.userVehicleItem.getId());
-                rentRequest.setStart(UserVehicleDetailActivity.this.cldFrom.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-                rentRequest.setUntil(UserVehicleDetailActivity.this.cldTo.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-
-                UserVehicleDetailActivity.this.disposable = UserApi.rent(UserVehicleDetailActivity.this, rentRequest);
+                BottomSheets.userRentConfirmation(
+                        this,
+                        this.userVehicleItem,
+                        UserVehicleDetailActivity.this.cldFrom.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                        UserVehicleDetailActivity.this.cldTo.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+                );
             }
         });
 

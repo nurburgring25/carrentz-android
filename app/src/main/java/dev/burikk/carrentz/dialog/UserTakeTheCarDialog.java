@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +29,7 @@ import dev.burikk.carrentz.activity.UserHomeActivity;
 import dev.burikk.carrentz.api.user.UserApi;
 import dev.burikk.carrentz.api.user.endpoint.rent.item.UserRentItem;
 import dev.burikk.carrentz.bottomsheet.BottomSheets;
+import dev.burikk.carrentz.helper.Formats;
 import dev.burikk.carrentz.helper.Strings;
 import dev.burikk.carrentz.helper.Validators;
 import dev.burikk.carrentz.protocol.MainProtocol;
@@ -39,6 +41,8 @@ public class UserTakeTheCarDialog extends AppCompatDialogFragment implements Mai
     public LinearLayout linearLayout;
     @BindView(R.id.progressBar)
     public ProgressBar progressBar;
+    @BindView(R.id.txvRemainingAmount)
+    public TextView txvRemainingAmount;
     @BindView(R.id.edtCode)
     public TextInputEditText edtCode;
 
@@ -75,6 +79,7 @@ public class UserTakeTheCarDialog extends AppCompatDialogFragment implements Mai
         this.unbinder = ButterKnife.bind(this, view);
 
         this.extract();
+        this.widget();
 
         return view;
     }
@@ -149,6 +154,10 @@ public class UserTakeTheCarDialog extends AppCompatDialogFragment implements Mai
         if (this.getArguments() != null) {
             this.userRentItem = (UserRentItem) this.getArguments().getSerializable("USER_RENT_ITEM");
         }
+    }
+
+    private void widget() {
+        this.txvRemainingAmount.setText(Formats.getCurrencyFormat(this.userRentItem.getTotal().subtract(this.userRentItem.getDownPayment()).longValue()));
     }
 
     private boolean valid() {

@@ -86,8 +86,6 @@ public class MerchantRentBottomSheet extends BottomSheetDialogFragment implement
     public TextView txvReturnCode;
     @BindView(R.id.btnGetReturnCode)
     public MaterialButton btnGetReturnCode;
-    @BindView(R.id.btnCancel)
-    public MaterialButton btnCancel;
 
     public AppCompatActivity appCompatActivity;
     public MerchantRentItem merchantRentItem;
@@ -184,13 +182,6 @@ public class MerchantRentBottomSheet extends BottomSheetDialogFragment implement
             Views.visible(this.txvReturnCode);
 
             this.txvReturnCode.setText((String) data);
-        } else {
-            BottomSheets.message(
-                    this.appCompatActivity,
-                    "Dokumen telah berhasil dibatalkan."
-            );
-
-            this.close();
         }
     }
 
@@ -212,28 +203,6 @@ public class MerchantRentBottomSheet extends BottomSheetDialogFragment implement
         this.disposable = MerchantApi.rentGetReturnCode(
                 this,
                 this.merchantRentItem.getId()
-        );
-    }
-
-    @OnClick(R.id.btnCancel)
-    public void cancel() {
-        BottomSheets.confirmation(
-                this.appCompatActivity,
-                "Apakah anda yakin ingin membatalkan dokumen ini?",
-                "TIDAK",
-                "BATALKAN DOKUMEN INI",
-                new ConfirmationBottomSheet.ConfirmationBottomSheetCallback() {
-                    @Override
-                    public void negative() {}
-
-                    @Override
-                    public void positive() {
-                        MerchantRentBottomSheet.this.disposable = MerchantApi.cancelRent(
-                                MerchantRentBottomSheet.this,
-                                MerchantRentBottomSheet.this.merchantRentItem.getId()
-                        );
-                    }
-                }
         );
     }
 
@@ -263,15 +232,13 @@ public class MerchantRentBottomSheet extends BottomSheetDialogFragment implement
 
         Views.gone(
                 this.mcvRentCode,
-                this.mcvReturnCode,
-                this.btnCancel
+                this.mcvReturnCode
         );
 
         if (this.appCompatActivity instanceof MerchantRentListActivity) {
             if (StringUtils.equals(this.merchantRentItem.getStatus(), DocumentStatus.OPENED.name())) {
                 Views.visible(
-                        this.mcvRentCode,
-                        this.btnCancel
+                        this.mcvRentCode
                 );
 
                 if (StringUtils.isNotBlank(this.merchantRentItem.getRentCode())) {

@@ -287,6 +287,30 @@ public class UserApi {
                 );
     }
 
+    public static Disposable cancelRent(
+            MainProtocol<Object> mainProtocol,
+            Long id
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(UserParser.class)
+                .cancelRent(id)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                mainProtocol.result(null);
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
     public static Disposable rentTakeTheCar(
             MainProtocol<Void> mainProtocol,
             Long id,
