@@ -50,9 +50,9 @@ public interface UserParser {
     @DELETE("users/rents/{id}")
     Observable<Response<Void>> cancelRent(@Path("id") Long id);
 
-    @GET("users/rents/{id}/take-the-car")
-    Observable<Response<Void>> rentTakeTheCar(@Path("id") Long id, @Query("code") String code);
+    @GET("users/rents/{id}/take-vehicle")
+    Observable<Response<Void>> rentTakeVehicle(@Path("id") Long id, @Query("code") String code);
 
-    @GET("users/rents/{id}/return-the-car")
-    Observable<Response<Void>> rentReturnTheCar(@Path("id") Long id, @Query("code") String code);
+    @GET("users/rents/{id}/return-vehicle")
+    Observable<Response<Void>> rentReturnVehicle(@Path("id") Long id, @Query("code") String code);
 }

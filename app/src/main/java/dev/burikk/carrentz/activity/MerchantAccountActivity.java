@@ -12,6 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dev.burikk.carrentz.R;
+import dev.burikk.carrentz.bottomsheet.BottomSheets;
 import dev.burikk.carrentz.enumeration.SharedPreferenceKey;
 import dev.burikk.carrentz.helper.Generals;
 import dev.burikk.carrentz.helper.Preferences;
@@ -40,14 +41,9 @@ public class MerchantAccountActivity extends AppCompatActivity {
         this.widget();
     }
 
-    @OnClick(R.id.llContactUs)
-    public void contactUs() {
-
-    }
-
-    @OnClick(R.id.llSetting)
-    public void setting() {
-
+    @OnClick(R.id.llChangePassword)
+    public void changePassword() {
+        BottomSheets.changePassword(this);
     }
 
     @OnClick(R.id.llSignOut)

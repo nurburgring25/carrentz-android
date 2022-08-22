@@ -19,6 +19,7 @@ import butterknife.Unbinder;
 import dev.burikk.carrentz.R;
 import dev.burikk.carrentz.activity.UserHomeActivity;
 import dev.burikk.carrentz.activity.WelcomeActivity;
+import dev.burikk.carrentz.bottomsheet.BottomSheets;
 import dev.burikk.carrentz.enumeration.SharedPreferenceKey;
 import dev.burikk.carrentz.helper.Generals;
 import dev.burikk.carrentz.helper.Preferences;
@@ -56,14 +57,9 @@ public class UserAccountFragment extends Fragment {
         return view;
     }
 
-    @OnClick(R.id.llContactUs)
-    public void contactUs() {
-
-    }
-
-    @OnClick(R.id.llSetting)
-    public void setting() {
-
+    @OnClick(R.id.llChangePassword)
+    public void changePassword() {
+        BottomSheets.changePassword(this.userHomeActivity);
     }
 
     @OnClick(R.id.llSignOut)

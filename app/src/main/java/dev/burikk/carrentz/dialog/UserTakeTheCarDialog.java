@@ -138,7 +138,7 @@ public class UserTakeTheCarDialog extends AppCompatDialogFragment implements Mai
     @OnClick(R.id.btnVerification)
     public void verification() {
         if (this.valid()) {
-            this.disposable = UserApi.rentTakeTheCar(
+            this.disposable = UserApi.rentTakeVehicle(
                     this,
                     this.userRentItem.getId(),
                     Strings.value(this.edtCode.getText())

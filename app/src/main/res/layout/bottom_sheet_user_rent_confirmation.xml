@@ -397,12 +397,12 @@
 
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.Material3.Button.UnelevatedButton"
-            android:id="@+id/btnRentThisCar"
+            android:id="@+id/btnRentThisVehicle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:visibility="visible"
-            android:text="RENTAL MOBIL INI" />
+            android:text="RENTAL KENDARAAN INI" />
 
     </LinearLayout>
 

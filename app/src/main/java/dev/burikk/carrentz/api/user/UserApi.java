@@ -311,7 +311,7 @@ public class UserApi {
                 );
     }
 
-    public static Disposable rentTakeTheCar(
+    public static Disposable rentTakeVehicle(
             MainProtocol<Void> mainProtocol,
             Long id,
             String code
@@ -319,7 +319,7 @@ public class UserApi {
         return RestManager
                 .GET_RETROFIT()
                 .create(UserParser.class)
-                .rentTakeTheCar(id, code)
+                .rentTakeVehicle(id, code)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -336,7 +336,7 @@ public class UserApi {
                 );
     }
 
-    public static Disposable rentReturnTheCar(
+    public static Disposable rentReturnVehicle(
             MainProtocol<Void> mainProtocol,
             Long id,
             String code
@@ -344,7 +344,7 @@ public class UserApi {
         return RestManager
                 .GET_RETROFIT()
                 .create(UserParser.class)
-                .rentReturnTheCar(id, code)
+                .rentReturnVehicle(id, code)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

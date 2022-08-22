@@ -133,7 +133,7 @@ public class UserReturnTheCarDialog extends AppCompatDialogFragment implements M
     @OnClick(R.id.btnVerification)
     public void verification() {
         if (this.valid()) {
-            this.disposable = UserApi.rentReturnTheCar(
+            this.disposable = UserApi.rentReturnVehicle(
                     this,
                     this.userRentItem.getId(),
                     Strings.value(this.edtCode.getText())

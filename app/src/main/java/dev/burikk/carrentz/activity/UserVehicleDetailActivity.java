@@ -121,8 +121,8 @@ public class UserVehicleDetailActivity extends AppCompatActivity implements View
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick(R.id.btnRentThisCar)
-    public void rentThisCar() {
+    @OnClick(R.id.btnRentThisVehicle)
+    public void rentThisVehicle() {
         MaterialDatePicker.Builder<Pair<Long, Long>> builder = MaterialDatePicker.Builder.dateRangePicker();
 
         builder.setCalendarConstraints(
@@ -240,7 +240,7 @@ public class UserVehicleDetailActivity extends AppCompatActivity implements View
         if (this.getSupportActionBar() != null) {
             this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             this.getSupportActionBar().setHomeButtonEnabled(true);
-            this.getSupportActionBar().setTitle("Rental Mobil");
+            this.getSupportActionBar().setTitle("Rental Kendaraan");
         }
     }
 

@@ -273,4 +273,12 @@ public class BottomSheets {
 
         return userRentConfirmationBottomSheet;
     }
+
+    public static ChangePasswordBottomSheet changePassword(AppCompatActivity appCompatActivity) {
+        ChangePasswordBottomSheet changePasswordBottomSheet = ChangePasswordBottomSheet.newInstance();
+        changePasswordBottomSheet.setCancelable(false);
+        changePasswordBottomSheet.show(appCompatActivity.getSupportFragmentManager(), ChangePasswordBottomSheet.class.getSimpleName());
+
+        return changePasswordBottomSheet;
+    }
 }

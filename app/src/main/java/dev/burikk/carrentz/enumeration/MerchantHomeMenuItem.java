@@ -10,11 +10,11 @@ import dev.burikk.carrentz.R;
  */
 public enum MerchantHomeMenuItem {
     STORE(R.drawable.ic_store, "Cabang"),
-    VEHICLE(R.drawable.ic_directions_car, "Mobil"),
+    VEHICLE(R.drawable.ic_directions_car, "Kendaraan"),
     RENT(R.drawable.ic_assignment, "Rental"),
     ACCOUNT(R.drawable.ic_person, "Akun"),
     DAILY_RENT(R.drawable.ic_bar_chart, "Rental per Hari"),
-    VEHICLE_AVAILABILITY(R.drawable.ic_departure_board, "Ketersediaan Mobil"),
+    VEHICLE_AVAILABILITY(R.drawable.ic_departure_board, "Ketersediaan Kendaraan"),
     RENT_BY_VEHICLE(R.drawable.ic_bar_chart, "Rental per Kendaraan"),
     RENT_BY_VEHICLE_TYPE(R.drawable.ic_bar_chart, "Rental per Jenis Kendaraan"),
     RENT_BY_STORE(R.drawable.ic_bar_chart, "Rental per Cabang"),

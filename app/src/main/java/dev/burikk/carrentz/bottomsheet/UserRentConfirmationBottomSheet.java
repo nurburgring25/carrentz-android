@@ -166,7 +166,7 @@ public class UserRentConfirmationBottomSheet extends BottomSheetDialogFragment i
     public void result(Object data) {
         BottomSheets.message(
                 this.userVehicleDetailActivity,
-                "Mobil berhasil disewa.",
+                "Kendaraan berhasil disewa.",
                 new MessageBottomSheet.MessageBottomSheetCallback() {
                     @Override
                     public void dismiss() {
@@ -185,8 +185,8 @@ public class UserRentConfirmationBottomSheet extends BottomSheetDialogFragment i
         this.dismiss();
     }
 
-    @OnClick(R.id.btnRentThisCar)
-    public void rentThisCar() {
+    @OnClick(R.id.btnRentThisVehicle)
+    public void rentThisVehicle() {
         RentRequest rentRequest = new RentRequest();
 
         rentRequest.setVehicleId(this.userVehicleItem.getId());

@@ -312,7 +312,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     style="@style/Widget.Material3.Button.UnelevatedButton"
-                    android:id="@+id/btnRentThisCar"
+                    android:id="@+id/btnRentThisVehicle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -320,7 +320,7 @@
                     android:insetBottom="0dp"
                     android:insetLeft="0dp"
                     android:insetRight="0dp"
-                    android:text="SEWA MOBIL INI"
+                    android:text="SEWA KENDARAAN INI"
                     app:cornerRadius="0dp" />
 
             </LinearLayout>

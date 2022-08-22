@@ -76,10 +76,10 @@ public class UserRentBottomSheet extends BottomSheetDialogFragment implements Ma
     public TextView txvTotal;
     @BindView(R.id.btnCancel)
     public MaterialButton btnCancel;
-    @BindView(R.id.btnTakeTheCar)
-    public MaterialButton btnTakeTheCar;
-    @BindView(R.id.btnReturnTheCar)
-    public MaterialButton btnReturnTheCar;
+    @BindView(R.id.btnTakeVehicle)
+    public MaterialButton btnTakeVehicle;
+    @BindView(R.id.btnReturnVehicle)
+    public MaterialButton btnReturnVehicle;
 
     public UserHomeActivity userHomeActivity;
     public UserRentItem userRentItem;
@@ -177,8 +177,8 @@ public class UserRentBottomSheet extends BottomSheetDialogFragment implements Ma
         this.dismiss();
     }
 
-    @OnClick(R.id.btnTakeTheCar)
-    public void takeTheCar() {
+    @OnClick(R.id.btnTakeVehicle)
+    public void takeVehicle() {
         Dialogs.userTakeTheCar(
                 this.userHomeActivity,
                 this.userRentItem,
@@ -186,8 +186,8 @@ public class UserRentBottomSheet extends BottomSheetDialogFragment implements Ma
         );
     }
 
-    @OnClick(R.id.btnReturnTheCar)
-    public void returnTheCar() {
+    @OnClick(R.id.btnReturnVehicle)
+    public void returnVehicle() {
         Dialogs.userReturnTheCar(
                 this.userHomeActivity,
                 this.userRentItem,
@@ -243,20 +243,20 @@ public class UserRentBottomSheet extends BottomSheetDialogFragment implements Ma
         this.txvTotal.setText(Formats.getCurrencyFormat(this.userRentItem.getTotal().longValue()));
 
         Views.gone(
-                this.btnTakeTheCar,
-                this.btnReturnTheCar,
+                this.btnTakeVehicle,
+                this.btnReturnVehicle,
                 this.btnCancel
         );
 
         if (StringUtils.equals(this.userRentItem.getStatus(), DocumentStatus.OPENED.name())) {
             Views.visible(
-                    this.btnTakeTheCar,
+                    this.btnTakeVehicle,
                     this.btnCancel
             );
         }
 
         if (StringUtils.equals(this.userRentItem.getStatus(), DocumentStatus.ONGOING.name())) {
-            Views.visible(this.btnReturnTheCar);
+            Views.visible(this.btnReturnVehicle);
         }
     }
 }

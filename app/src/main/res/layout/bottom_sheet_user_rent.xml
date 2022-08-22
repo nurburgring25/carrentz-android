@@ -174,7 +174,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="Nama Mobil"
+                    android:text="Nama Kendaraan"
                     android:textSize="12sp"
                     android:textColor="@color/md_theme_primary"
                     android:textStyle="bold" />
@@ -401,21 +401,21 @@
 
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.Material3.Button.UnelevatedButton"
-            android:id="@+id/btnTakeTheCar"
+            android:id="@+id/btnTakeVehicle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:visibility="gone"
-            android:text="AMBIL MOBIL" />
+            android:text="AMBIL KENDARAAN" />
 
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.Material3.Button.UnelevatedButton"
-            android:id="@+id/btnReturnTheCar"
+            android:id="@+id/btnReturnVehicle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:visibility="gone"
-            android:text="KEMBALIKAN MOBIL" />
+            android:text="KEMBALIKAN KENDARAAN" />
 
     </LinearLayout>
 

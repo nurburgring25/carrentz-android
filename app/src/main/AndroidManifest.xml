@@ -177,7 +177,7 @@
 
         <activity
             android:name=".activity.MerchantVehicleAvailabilityActivity"
-            android:label="Ketersediaan Mobil"
+            android:label="Ketersediaan Kendaraan"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:exported="false"
@@ -267,7 +267,7 @@
 
         <activity
             android:name=".activity.MerchantDailyRentActivity"
-            android:label="Rental Berdasarkan Pelanggan"
+            android:label="Rental per Hari"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:exported="false"
