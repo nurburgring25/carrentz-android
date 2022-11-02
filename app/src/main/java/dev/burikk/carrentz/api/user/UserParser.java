@@ -1,5 +1,6 @@
 package dev.burikk.carrentz.api.user;
 
+import dev.burikk.carrentz.api.user.endpoint.account.request.ChangePasswordRequest;
 import dev.burikk.carrentz.api.user.endpoint.account.request.RegisterRequest;
 import dev.burikk.carrentz.api.user.endpoint.account.request.SignInRequest;
 import dev.burikk.carrentz.api.user.endpoint.account.request.VerificationRequest;
@@ -15,6 +16,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -32,6 +34,9 @@ public interface UserParser {
     @POST("users/verify")
     Observable<Response<Void>> verify(@Body VerificationRequest verificationRequest);
 
+    @PUT("users/change-password")
+    Observable<Response<Void>> changePassword(@Body ChangePasswordRequest changePasswordRequest);
+
     @GET("users/homes/vehicle-type")
     Observable<Response<HomeVehicleTypeResponse>> homeVehicleType();
 
@@ -40,6 +45,9 @@ public interface UserParser {
 
     @GET("users/vehicles")
     Observable<Response<UserVehicleListResponse>> userVehicleList(@Query("storeId") long id);
+
+    @GET("users/vehicle-by-types/{id}")
+    Observable<Response<UserVehicleListResponse>> userVehicleByTypeList(@Path("id") long id);
 
     @POST("users/rents")
     Observable<Response<Void>> rent(@Body RentRequest rentRequest);

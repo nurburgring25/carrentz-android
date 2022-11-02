@@ -28,6 +28,7 @@ import butterknife.Unbinder;
 import dev.burikk.carrentz.R;
 import dev.burikk.carrentz.activity.UserHomeActivity;
 import dev.burikk.carrentz.activity.UserStoreListActivity;
+import dev.burikk.carrentz.activity.UserVehicleByTypeListActivity;
 import dev.burikk.carrentz.adapter.UserHomeVehicleTypeAdapter;
 import dev.burikk.carrentz.api.user.UserApi;
 import dev.burikk.carrentz.api.user.endpoint.home.item.HomeVehicleTypeItem;
@@ -138,7 +139,11 @@ public class UserHomeFragment extends Fragment implements MainProtocol<Object>, 
 
     @Override
     public void onSelected(HomeVehicleTypeItem homeVehicleTypeItem) {
+        Bundle bundle = new Bundle();
 
+        bundle.putSerializable("HOME_VEHICLE_TYPE_ITEM", homeVehicleTypeItem);
+
+        Generals.move(this.userHomeActivity, UserVehicleByTypeListActivity.class, bundle, false);
     }
 
     @OnClick(R.id.llNearest)

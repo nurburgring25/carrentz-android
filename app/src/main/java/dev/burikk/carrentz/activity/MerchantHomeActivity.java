@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import dev.burikk.carrentz.R;
 import dev.burikk.carrentz.adapter.MerchantHomeMenuAdapter;
 import dev.burikk.carrentz.api.merchant.MerchantApi;
@@ -132,8 +133,8 @@ public class MerchantHomeActivity extends AppCompatActivity implements MerchantH
             this.txvIncomingPaymentDifferencePercentage.setText("+" + Formats.getCurrencyFormat(data.getIncomingPaymentDifferencePercentage().longValue(), false) + "%");
             this.txvIncomingPaymentDifferenceAmount.setText("+" + Formats.getCurrencyFormat(data.getIncomingPaymentDifferenceAmount().longValue()));
         } else {
-            this.txvIncomingPaymentDifferencePercentage.setText("-" + Formats.getCurrencyFormat(data.getIncomingPaymentDifferencePercentage().longValue(), false) + "%");
-            this.txvIncomingPaymentDifferenceAmount.setText("-" + Formats.getCurrencyFormat(data.getIncomingPaymentDifferenceAmount().longValue()));
+            this.txvIncomingPaymentDifferencePercentage.setText(Formats.getCurrencyFormat(data.getIncomingPaymentDifferencePercentage().longValue(), false) + "%");
+            this.txvIncomingPaymentDifferenceAmount.setText(Formats.getCurrencyFormat(data.getIncomingPaymentDifferenceAmount().longValue()));
         }
 
         this.txvMostFavoriteVehicle.setText(data.getMostFavoriteVehicle());
@@ -203,6 +204,26 @@ public class MerchantHomeActivity extends AppCompatActivity implements MerchantH
 
             this.lcIncomingPayment.animateX(1500, Easing.EaseInOutQuad);
         }
+    }
+
+    @OnClick(R.id.btnMostFavoriteVehicleDetail)
+    public void mostFavoriteVehicleDetail() {
+        Generals.move(this, MerchantRentByVehicleActivity.class, false);
+    }
+
+    @OnClick(R.id.btnMostFavoriteVehicleTypeDetail)
+    public void mostFavoriteVehicleTypeDetail() {
+        Generals.move(this, MerchantRentByVehicleTypeActivity.class, false);
+    }
+
+    @OnClick(R.id.btnMostFavoriteStoreDetail)
+    public void mostFavoriteStoreDetail() {
+        Generals.move(this, MerchantRentByStoreActivity.class, false);
+    }
+
+    @OnClick(R.id.btnMostFavoriteCustomerDetail)
+    public void mostFavoriteCustomerDetail() {
+        Generals.move(this, MerchantRentByCustomerActivity.class, false);
     }
 
     private void widget() {

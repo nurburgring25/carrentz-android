@@ -92,12 +92,20 @@ public class MerchantRentListFragment extends Fragment {
                         + merchantRentItem.getVehicle().getVehicleType();
 
                 if (StringUtils.isBlank(this.merchantRentListActivity.searchTerm) || StringUtils.containsIgnoreCase(searchKey, this.merchantRentListActivity.searchTerm)) {
-                    if (this.mode == 1) {
+                    if (this.mode == 0) {
+                        if (StringUtils.equalsIgnoreCase(DocumentStatus.OPENED.name(), merchantRentItem.getStatus())) {
+                            merchantRentListAdapter.getMerchantRentItems().add(merchantRentItem);
+                        }
+                    } else if (this.mode == 1) {
                         if (StringUtils.equalsIgnoreCase(DocumentStatus.ONGOING.name(), merchantRentItem.getStatus())) {
                             merchantRentListAdapter.getMerchantRentItems().add(merchantRentItem);
                         }
-                    } else {
-                        if (StringUtils.equalsIgnoreCase(DocumentStatus.OPENED.name(), merchantRentItem.getStatus())) {
+                    } else if (this.mode == 2) {
+                        if (StringUtils.equalsIgnoreCase(DocumentStatus.CLOSED.name(), merchantRentItem.getStatus())) {
+                            merchantRentListAdapter.getMerchantRentItems().add(merchantRentItem);
+                        }
+                    } else if (this.mode == 3) {
+                        if (StringUtils.equalsIgnoreCase(DocumentStatus.CANCELLED.name(), merchantRentItem.getStatus())) {
                             merchantRentListAdapter.getMerchantRentItems().add(merchantRentItem);
                         }
                     }

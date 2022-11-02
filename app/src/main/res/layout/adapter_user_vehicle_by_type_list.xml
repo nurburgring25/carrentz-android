@@ -81,33 +81,10 @@
                 app:tint="@color/md_theme_primary" />
 
             <TextView
-                android:id="@+id/txvLicensePlate"
+                android:id="@+id/txvStore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nomor Polisi"
-                android:textSize="14sp"
-                android:textColor="@color/md_theme_onBackground" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/ic_access_time"
-                app:tint="@color/md_theme_primary" />
-
-            <TextView
-                android:id="@+id/txvDuration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Durasi"
+                android:text="Cabang"
                 android:textSize="14sp"
                 android:textColor="@color/md_theme_onBackground" />
 
@@ -127,10 +104,10 @@
                 app:tint="@color/md_theme_primary" />
 
             <TextView
-                android:id="@+id/txvAmount"
+                android:id="@+id/txvPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total"
+                android:text="Harga"
                 android:textSize="14sp"
                 android:textColor="@color/md_theme_onBackground" />
 

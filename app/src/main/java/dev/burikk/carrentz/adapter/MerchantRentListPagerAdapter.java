@@ -13,7 +13,7 @@ public class MerchantRentListPagerAdapter extends FragmentStateAdapter {
     private final Fragment[] fragments;
 
     {
-        this.fragments = new Fragment[2];
+        this.fragments = new Fragment[4];
     }
 
     public MerchantRentListPagerAdapter(MerchantRentListActivity merchantRentListActivity) {

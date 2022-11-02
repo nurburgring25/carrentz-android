@@ -2,6 +2,7 @@ package dev.burikk.carrentz.api.merchant;
 
 import java.util.List;
 
+import dev.burikk.carrentz.api.merchant.endpoint.account.request.ChangePasswordRequest;
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.RegisterRequest;
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.SignInRequest;
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.VerificationRequest;
@@ -47,6 +48,9 @@ public interface MerchantParser {
 
     @POST("merchants/verify")
     Observable<Response<Void>> verify(@Body VerificationRequest verificationRequest);
+
+    @PUT("merchants/change-password")
+    Observable<Response<Void>> changePassword(@Body ChangePasswordRequest changePasswordRequest);
 
     @GET("merchants/stores")
     Observable<Response<StoreListResponse>> storeGet();

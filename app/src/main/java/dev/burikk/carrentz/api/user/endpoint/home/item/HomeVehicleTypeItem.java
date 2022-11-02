@@ -1,6 +1,8 @@
 package dev.burikk.carrentz.api.user.endpoint.home.item;
 
-public class HomeVehicleTypeItem {
+import java.io.Serializable;
+
+public class HomeVehicleTypeItem implements Serializable {
     private long id;
     private String name;
     private String image;

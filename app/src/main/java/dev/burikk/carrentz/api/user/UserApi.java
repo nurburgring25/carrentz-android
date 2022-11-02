@@ -5,6 +5,7 @@ import android.util.Log;
 import org.apache.commons.lang3.StringUtils;
 
 import dev.burikk.carrentz.api.RestManager;
+import dev.burikk.carrentz.api.user.endpoint.account.request.ChangePasswordRequest;
 import dev.burikk.carrentz.api.user.endpoint.account.request.RegisterRequest;
 import dev.burikk.carrentz.api.user.endpoint.account.request.SignInRequest;
 import dev.burikk.carrentz.api.user.endpoint.account.request.VerificationRequest;
@@ -152,6 +153,30 @@ public class UserApi {
                 );
     }
 
+    public static Disposable changePassword(
+            MainProtocol<Void> mainProtocol,
+            ChangePasswordRequest changePasswordRequest
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(UserParser.class)
+                .changePassword(changePasswordRequest)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                mainProtocol.result(null);
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
     public static Disposable homeVehicleType(MainProtocol<Object> mainProtocol) {
         return RestManager
                 .GET_RETROFIT()
@@ -214,6 +239,36 @@ public class UserApi {
                 .GET_RETROFIT()
                 .create(UserParser.class)
                 .userVehicleList(storeId)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                UserVehicleListResponse userVehicleListResponse = response.body();
+
+                                if (userVehicleListResponse != null) {
+                                    mainProtocol.result(userVehicleListResponse);
+                                } else {
+                                    error(mainProtocol, new Exception());
+                                }
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable userVehicleByTypeList(
+            MainProtocol<UserVehicleListResponse> mainProtocol,
+            long id
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(UserParser.class)
+                .userVehicleByTypeList(id)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.List;
 
 import dev.burikk.carrentz.api.RestManager;
+import dev.burikk.carrentz.api.merchant.endpoint.account.request.ChangePasswordRequest;
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.RegisterRequest;
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.SignInRequest;
 import dev.burikk.carrentz.api.merchant.endpoint.account.request.VerificationRequest;
@@ -155,6 +156,30 @@ public class MerchantApi {
                         response -> {
                             if (response.isSuccessful()) {
                                 mainProtocol.result(response);
+                            } else {
+                                error(mainProtocol, new HttpException(response));
+                            }
+                        },
+                        throwable -> error(mainProtocol, throwable),
+                        () -> finish(mainProtocol),
+                        disposable -> process(mainProtocol)
+                );
+    }
+
+    public static Disposable changePassword(
+            MainProtocol<Void> mainProtocol,
+            ChangePasswordRequest changePasswordRequest
+    ) {
+        return RestManager
+                .GET_RETROFIT()
+                .create(MerchantParser.class)
+                .changePassword(changePasswordRequest)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                mainProtocol.result(null);
                             } else {
                                 error(mainProtocol, new HttpException(response));
                             }

@@ -18,12 +18,20 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
 
+import org.apache.commons.lang3.StringUtils;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import dev.burikk.carrentz.R;
+import dev.burikk.carrentz.activity.MerchantAccountActivity;
+import dev.burikk.carrentz.activity.UserHomeActivity;
+import dev.burikk.carrentz.api.merchant.MerchantApi;
+import dev.burikk.carrentz.api.user.UserApi;
 import dev.burikk.carrentz.helper.Keyboards;
+import dev.burikk.carrentz.helper.Strings;
+import dev.burikk.carrentz.helper.Validators;
 import dev.burikk.carrentz.protocol.MainProtocol;
 import io.reactivex.disposables.Disposable;
 
@@ -132,11 +140,35 @@ public class ChangePasswordBottomSheet extends BottomSheetDialogFragment impleme
 
     @OnClick(R.id.btnSave)
     public void save() {
+        if (this.valid()) {
+            if (this.appCompatActivity instanceof UserHomeActivity) {
+                dev.burikk.carrentz.api.user.endpoint.account.request.ChangePasswordRequest changePasswordRequest = new dev.burikk.carrentz.api.user.endpoint.account.request.ChangePasswordRequest();
 
+                changePasswordRequest.setOldPassword(Strings.value(this.edtOldPassword.getText()));
+                changePasswordRequest.setNewPassword(String.valueOf(this.edtNewPassword.getText()));
+
+                this.disposable = UserApi.changePassword(this, changePasswordRequest);
+            } else if (this.appCompatActivity instanceof MerchantAccountActivity) {
+                dev.burikk.carrentz.api.merchant.endpoint.account.request.ChangePasswordRequest changePasswordRequest = new dev.burikk.carrentz.api.merchant.endpoint.account.request.ChangePasswordRequest();
+
+                changePasswordRequest.setOldPassword(Strings.value(this.edtOldPassword.getText()));
+                changePasswordRequest.setNewPassword(String.valueOf(this.edtNewPassword.getText()));
+
+                this.disposable = MerchantApi.changePassword(this, changePasswordRequest);
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
     private void init() {
         new Keyboards(this.appCompatActivity, this.linearLayout);
+    }
+
+    @SuppressWarnings({"PointlessBooleanExpression", "ConstantConditions"})
+    private boolean valid() {
+        return true &&
+                Validators.mandatory(this.appCompatActivity, this.edtNewPassword, "New Password") &&
+                Validators.minLength(this.edtNewPassword, 6) &&
+                Validators.custom(!StringUtils.equals(this.edtNewPassword.getText().toString(), this.edtConfirmNewPassword.getText().toString()), this.edtConfirmNewPassword, "Konfirmasi kata sandi tidak sesuai.");
     }
 }

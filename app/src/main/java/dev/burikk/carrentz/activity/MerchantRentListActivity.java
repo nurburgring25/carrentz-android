@@ -174,7 +174,7 @@ public class MerchantRentListActivity extends AppCompatActivity implements MainP
     private void widget() {
         this.swipeRefreshLayout.setOnRefreshListener(this);
 
-        this.viewPager.setOffscreenPageLimit(2);
+        this.viewPager.setOffscreenPageLimit(4);
         this.viewPager.setAdapter(new MerchantRentListPagerAdapter(this));
 
         new TabLayoutMediator(this.tabLayout, this.viewPager, (tab, position) -> {
@@ -182,6 +182,10 @@ public class MerchantRentListActivity extends AppCompatActivity implements MainP
                 tab.setText(DocumentStatus.OPENED.name());
             } else if (position == 1) {
                 tab.setText(DocumentStatus.ONGOING.name());
+            } else if (position == 2) {
+                tab.setText(DocumentStatus.CLOSED.name());
+            } else if (position == 3) {
+                tab.setText(DocumentStatus.CANCELLED.name());
             }
         }).attach();
     }

@@ -61,33 +61,40 @@
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/activity_user_vehicle_detail.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/activity_vehicle_form.xml" value="0.25" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/activity_vehicle_list.xml" value="0.13333333333333333" />
-        <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/activity_welcome.xml" value="0.19947916666666668" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/adapter_merchant_daily_rent.xml" value="0.19375" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/adapter_merchant_rent_by_customer.xml" value="0.19375" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/adapter_merchant_rent_by_store.xml" value="0.19375" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/adapter_merchant_rent_by_vehicle.xml" value="0.18796296296296297" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/adapter_merchant_rent_by_vehicle_type.xml" value="0.19375" />
-        <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/adapter_merchant_rent_list.xml" value="0.19947916666666668" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/adapter_store_list.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/adapter_user_history.xml" value="0.19947916666666668" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/adapter_user_home_carousel.xml" value="0.19375" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/adapter_user_store_list.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/adapter_user_vehicle_detail.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/adapter_user_vehicle_list.xml" value="0.18802083333333333" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/adapter_vehicle_form_carousel.xml" value="0.19375" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/adapter_vehicle_list.xml" value="0.30833333333333335" />
-        <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/bottom_sheet_change_password.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/bottom_sheet_merchant_rent.xml" value="0.23780487804878048" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/bottom_sheet_user_rent.xml" value="0.2798913043478261" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/bottom_sheet_user_rent_confirmation.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/dialog_user_return_the_car.xml" value="0.30092592592592593" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/dialog_user_take_the_car.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/fragment_user_account.xml" value="0.36666666666666664" />
-        <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/fragment_user_home.xml" value="0.33" />
+        <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/fragment_user_home.xml" value="0.14814814814814814" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/fragment_user_welcome.xml" value="0.26851851851851855" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/view_calendar_day.xml" value="0.1" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/layout/view_calendar_day_legend.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/nurbu/StudioProjects/carrentz-android/app/src/main/res/menu/vehicle_list.xml" value="0.13333333333333333" />
+        <entry key="app/src/main/res/layout/activity_merchant_home.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_merchant_rent_list.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_user_vehicle_by_type_list.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/activity_user_vehicle_list.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/adapter_merchant_daily_rent.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/adapter_merchant_rent_by_customer.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/adapter_merchant_rent_by_vehicle.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/adapter_merchant_rent_by_vehicle_type.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/adapter_user_vehicle_by_type_list.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/adapter_user_vehicle_list.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/menu/user_vehicle_by_type_list.xml" value="0.28229166666666666" />
+        <entry key="app/src/main/res/menu/user_vehicle_list.xml" value="0.28229166666666666" />
       </map>
     </option>
   </component>
